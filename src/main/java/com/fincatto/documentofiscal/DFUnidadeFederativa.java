@@ -1,5 +1,6 @@
 package com.fincatto.documentofiscal;
 
+import org.apache.commons.lang3.StringUtils;
 /**
  * URls qrCode: http://nfce.encat.org/desenvolvedor/qrcode/
  * URLs consulta chave acesso: http://nfce.encat.org/consumidor/consulte-sua-nota/
@@ -20,11 +21,11 @@ public enum DFUnidadeFederativa {
     MS("MS", "Mato Grosso do Sul", "50", "http://www.dfe.ms.gov.br/nfce/qrcode", "http://www.dfe.ms.gov.br/nfce/qrcode", "http://www.dfe.ms.gov.br/nfce", "http://www.dfe.ms.gov.br/nfce"),
     MG("MG", "Minas Gerais", "31", "https://nfce.fazenda.mg.gov.br/portalnfce/sistema/qrcode.xhtml", "https://nfce.fazenda.mg.gov.br/portalnfce/sistema/qrcode.xhtml", "http://hnfce.fazenda.mg.gov.br/portalnfce", "http://nfce.fazenda.mg.gov.br/portalnfce"),
     PA("PA", "Par\u00E1", "15", "https://appnfc.sefa.pa.gov.br/portal-homologacao/view/consultas/nfce/nfceForm.seam", "https://appnfc.sefa.pa.gov.br/portal/view/consultas/nfce/nfceForm.seam", "https://appnfc.sefa.pa.gov.br/portal/view/consultas/nfce/consultanfce.seam", "https://appnfc.sefa.pa.gov.br/portal/view/consultas/nfce/consultanfce.seam"),
-    PB("PB", "Paraiba", "25", "http://www.receita.pb.gov.br/nfcehom", "http://www.receita.pb.gov.br/nfce", "www.receita.pb.gov.br/nfcehom", "www.receita.pb.gov.br/nfce/consulta"),
+    PB("PB", "Paraiba", "25", "http://www.sefaz.pb.gov.br/nfcehom", "http://www.sefaz.pb.gov.br/nfce", "http://www.sefaz.pb.gov.br/nfcehom", "http://www.sefaz.pb.gov.br/nfce"),
     PR("PR", "Paran\u00E1", "41", "http://www.fazenda.pr.gov.br/nfce/qrcode", "http://www.fazenda.pr.gov.br/nfce/qrcode", "http://www.fazenda.pr.gov.br", "http://www.fazenda.pr.gov.br"),
     PE("PE", "Pernambuco", "26", "http://nfcehomolog.sefaz.pe.gov.br/nfce-web/consultarNFCe", "http://nfce.sefaz.pe.gov.br/nfce-web/consultarNFCe", "nfce.sefaz.pe.gov.br/nfce/consulta", "nfce.sefaz.pe.gov.br/nfce/consulta"),
     PI("PI", "Piau\u00ED", "22", "http://www.sefaz.pi.gov.br/nfce/qrcode", "http://www.sefaz.pi.gov.br/nfce/qrcode" , "http://www.sefaz.pi.gov.br/nfce/consulta", "http://www.sefaz.pi.gov.br/nfce/consulta"),
-    RJ("RJ", "Rio de Janeiro", "33", "http://www4.fazenda.rj.gov.br/consultaNFCe/QRCode", "http://www4.fazenda.rj.gov.br/consultaNFCe/QRCode", "www.nfce.fazenda.rj.gov.br/consulta", "www.nfce.fazenda.rj.gov.br/consulta"),
+    RJ("RJ", "Rio de Janeiro", "33", "http://www4.fazenda.rj.gov.br/consultaNFCe/QRCode", "http://www4.fazenda.rj.gov.br/consultaNFCe/QRCode", "www.fazenda.rj.gov.br/nfce/consulta", "www.fazenda.rj.gov.br/nfce/consulta"),
     RN("RN", "Rio Grande do Norte", "24", "http://hom.nfce.set.rn.gov.br/consultarNFCe.aspx", "http://nfce.set.rn.gov.br/consultarNFCe.aspx", "http://nfce.set.rn.gov.br/consultarNFCe.aspx", "http://nfce.set.rn.gov.br/consultarNFCe.aspx"),
     RS("RS", "Rio Grande do Sul", "43", "https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx", "https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx", "https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx", "https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx"),
     RO("RO", "Rond\u00F4nia", "11", "http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp", "http://www.nfce.sefin.ro.gov.br/consultanfce/consulta.jsp", "http://www.nfce.sefin.ro.gov.br", "http://www.nfce.sefin.ro.gov.br"),
@@ -100,9 +101,9 @@ public enum DFUnidadeFederativa {
      */
     public static DFUnidadeFederativa valueOfCodigo(final String codigo) {
         for (final DFUnidadeFederativa uf : DFUnidadeFederativa.values()) {
-            if (uf.getCodigo().equalsIgnoreCase(codigo)) {
+            if (uf.getCodigo().equalsIgnoreCase(StringUtils.trim(codigo))) {
                 return uf;
-            } else if (uf.getCodigoIbge().equalsIgnoreCase(codigo)) {
+            } else if (uf.getCodigoIbge().equalsIgnoreCase(StringUtils.trim(codigo))) {
                 return uf;
             }
         }
