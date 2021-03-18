@@ -1,6 +1,14 @@
 package com.fincatto.documentofiscal.nfe;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+
+import org.apache.commons.httpclient.protocol.Protocol;
+
 import com.fincatto.documentofiscal.DFConfig;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
 
 /**
  * Configuração basica do sistema de notas fiscais.
@@ -39,5 +47,12 @@ public abstract class NFeConfig extends DFConfig {
      */
     public String getVersao() {
         return "4.00";
+    }
+    
+    /*
+     * para poder ser sobrescrito na classe que extende
+     */
+    public Protocol createProtocol() throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+        return new Protocol("https", new DFSocketFactory(this), 443);
     }
 }

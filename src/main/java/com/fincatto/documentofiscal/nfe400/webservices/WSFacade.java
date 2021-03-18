@@ -41,7 +41,8 @@ public class WSFacade {
     private final WSDistribuicaoNFe wSDistribuicaoNFe;
     
     public WSFacade(final NFeConfig config) throws KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException {
-        Protocol.registerProtocol("https", new Protocol("https", new DFSocketFactory(config), 443));
+        //Protocol.registerProtocol("https", new Protocol("https", new DFSocketFactory(config), 443));
+    	Protocol.registerProtocol("https", config.createProtocol());
         
         // inicia os servicos disponiveis da nfe
         this.wsLoteEnvio = new WSLoteEnvio(config);

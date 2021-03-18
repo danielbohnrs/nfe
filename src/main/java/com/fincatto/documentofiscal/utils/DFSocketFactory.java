@@ -1,6 +1,8 @@
 package com.fincatto.documentofiscal.utils;
 
 import com.fincatto.documentofiscal.DFConfig;
+
+import org.apache.axis2.java.security.TrustAllTrustManager;
 import org.apache.commons.httpclient.params.HttpConnectionParams;
 import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
 
@@ -59,6 +61,8 @@ public class DFSocketFactory implements ProtocolSocketFactory {
         final TrustManager[] trustManagers = this.createTrustManagers(config);
         final SSLContext sslContext = SSLContext.getInstance(config.getSSLProtocolos()[0]);
         sslContext.init(keyManagers, trustManagers, null);
+        //dessa forma poderia ser usado todos os certificados sem verificar a autenticidade
+        //sslContext.init(null, new TrustManager[] {new TrustAllTrustManager()}, null);
         return sslContext;
     }
 

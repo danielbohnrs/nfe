@@ -7,7 +7,7 @@ import com.fincatto.documentofiscal.DFBase;
 public class NFDistribuicaoConsultaNSU extends DFBase {
     private static final long serialVersionUID = -7083100043003754958L;
 
-    @Element(name = "NSU")
+    @Element(name = "NSU", required = false)
     private String nsu;
 
     public String getNsu() {

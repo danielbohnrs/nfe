@@ -20,7 +20,7 @@ public class NFEnviaEventoRetorno extends DFBase {
     private String versao;
 
     // O Converter StringNullConverter esta sendo utilizado para resolver um problema da autorizadora SVAN, que esta retornandoo atributo idLote vazio.
-    @Element(name = "idLote")
+    @Element(name = "idLote", required=false)
     @Convert(NFStringNullToEmptyConverter.class)
     private String idLote;
     

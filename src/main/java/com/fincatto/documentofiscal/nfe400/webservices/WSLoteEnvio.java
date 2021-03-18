@@ -63,8 +63,9 @@ class WSLoteEnvio implements DFLog {
         final NFLoteEnvio loteAssinado = this.config.getPersister().read(NFLoteEnvio.class, documentoAssinado);
         
         // verifica se nao tem NFCe junto com NFe no lote e gera qrcode (apos assinar mesmo, eh assim)
-        int qtdNF = 0, qtdNFC = 0;
+        int qtdNF = 0, qtdNFC = 0, i=0;
         for (final NFNota nota : loteAssinado.getNotas()) {
+        	nota.getInfo().getDestinatario().setIdEstrangeiro(lote.getNotas().get(i).getInfo().getDestinatario().getIdEstrangeiro());//precisa persistir este dado, mesmo que seja vazio
             switch (nota.getInfo().getIdentificacao().getModelo()) {
                 case NFE:
                     qtdNF++;
@@ -80,6 +81,7 @@ class WSLoteEnvio implements DFLog {
                 default:
                     throw new IllegalArgumentException(String.format("Modelo de nota desconhecida: %s", nota.getInfo().getIdentificacao().getModelo()));
             }
+            i++;
         }
         // verifica se todas as notas do lote sao do mesmo modelo
         if ((qtdNF > 0) && (qtdNFC > 0)) {

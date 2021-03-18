@@ -24,7 +24,7 @@ public class NFNotaProcessada extends DFBase {
     @Element(name = "NFe")
     private NFNota nota;
 
-    @Element(name = "protNFe")
+    @Element(name = "protNFe",required=false)
     private NFProtocolo protocolo;
 
     public NFNota getNota() {

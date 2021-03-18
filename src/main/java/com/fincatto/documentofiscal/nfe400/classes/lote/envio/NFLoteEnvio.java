@@ -58,4 +58,5 @@ public class NFLoteEnvio extends DFBase {
     public NFLoteIndicadorProcessamento getIndicadorProcessamento() {
         return this.indicadorProcessamento;
     }
+    
 }

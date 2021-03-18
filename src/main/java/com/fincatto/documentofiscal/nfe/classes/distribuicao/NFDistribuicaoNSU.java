@@ -7,7 +7,7 @@ import com.fincatto.documentofiscal.DFBase;
 public class NFDistribuicaoNSU extends DFBase {
     private static final long serialVersionUID = -7160177161852010611L;
 
-    @Element(name = "ultNSU")
+    @Element(name = "ultNSU", required = false)
     private String ultimoNSU;
 
     public java.lang.String getUltimoNSU() {
