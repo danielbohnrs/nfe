@@ -7,6 +7,7 @@ import com.fincatto.documentofiscal.nfe310.classes.NFAutorizador31;
 import com.fincatto.documentofiscal.validadores.DFXMLValidador;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
+import org.apache.commons.httpclient.protocol.Protocol;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.stream.XMLStreamException;
@@ -51,9 +52,10 @@ public class WSDistribuicaoNFe {
             final NFeDistribuicaoDFeSoapStub.NFeDistDFeInteresse distDFeInteresse = new NFeDistribuicaoDFeSoapStub.NFeDistDFeInteresse();
             distDFeInteresse.setNFeDadosMsg(dadosMsgType0);
 
+            Protocol.registerProtocol("https", config.createProtocol());//DJB-06/06/2022
             final NFeDistribuicaoDFeSoapStub stub = new NFeDistribuicaoDFeSoapStub(NFAutorizador31.AN.getNFeDistribuicaoDFe(this.config.getAmbiente()), config);
             final NFeDistribuicaoDFeSoapStub.NFeDistDFeInteresseResponse result = stub.nfeDistDFeInteresse(distDFeInteresse);
-    
+            Protocol.unregisterProtocol("https");//DJB-06/06/2022
             return this.config.getPersister().read(NFDistribuicaoIntRetorno.class, result.getNFeDistDFeInteresseResult().getExtraElement().toString());
         } catch (RemoteException | XMLStreamException e) {
             throw new Exception(e.getMessage());

@@ -11,6 +11,7 @@ import com.fincatto.documentofiscal.nfe400.webservices.gerado.NFeConsultaProtoco
 import com.fincatto.documentofiscal.nfe400.webservices.gerado.NFeConsultaProtocolo4Stub.NfeConsultaNFResult;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
+import org.apache.commons.httpclient.protocol.Protocol;
 
 import java.math.BigDecimal;
 
@@ -47,7 +48,9 @@ class WSNotaConsulta implements DFLog {
         if (endpoint == null) {
             throw new IllegalArgumentException("Nao foi possivel encontrar URL para ConsultaProtocolo " + notaFiscalChaveParser.getModelo().name() + ", autorizador " + autorizador.name());
         }
+        Protocol.registerProtocol("https", config.createProtocol());//DJB-06/06/2022
         final NfeConsultaNFResult consultaNFResult = new NFeConsultaProtocolo4Stub(endpoint, config).nfeConsultaNF(dados);
+        Protocol.unregisterProtocol("https");//DJB-06/06/2022
         return consultaNFResult.getExtraElement();
     }
     

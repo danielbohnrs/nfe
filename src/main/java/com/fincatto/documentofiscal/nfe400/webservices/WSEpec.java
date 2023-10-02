@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.apache.axiom.om.OMElement;
+import org.apache.commons.httpclient.protocol.Protocol;
 import org.apache.commons.lang3.StringUtils;
 
 import com.fincatto.documentofiscal.nfe400.classes.evento.epec.NFEnviaEventoEpec;
@@ -150,8 +151,10 @@ public class WSEpec implements DFLog {
         if (endpoint == null) {
             throw new IllegalArgumentException("Nao foi possivel encontrar URL para Autorizacao " + modelo.name() + ", autorizador " + autorizador.name());
         }
-
-        return new NFeRecepcaoEvento4Stub(endpoint, config).nfeRecepcaoEvento(dados);
+        Protocol.registerProtocol("https", config.createProtocol());//DJB-06/06/2022
+        NFeRecepcaoEvento4Stub.NfeResultMsg ret = new NFeRecepcaoEvento4Stub(endpoint, config).nfeRecepcaoEvento(dados);
+        Protocol.unregisterProtocol("https");//DJB-06/06/2022
+        return ret;
     }
 
     private OMElement nfeToOMElement(final String documento) throws XMLStreamException {

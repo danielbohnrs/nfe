@@ -2,6 +2,8 @@ package com.fincatto.documentofiscal.transformers;
 
 import org.simpleframework.xml.transform.Transform;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -11,7 +13,12 @@ public class DFDateTimeTransformer implements Transform<ZonedDateTime> {
 
     @Override
     public ZonedDateTime read(final String data) {
-        return ZonedDateTime.parse(data, format);
+    	if (data.contains("/")){
+    		LocalDateTime ldt = LocalDateTime.from(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ssXXX").parse(data));
+			ZonedDateTime zdt = ZonedDateTime.of(ldt, ZoneId.systemDefault());
+    		return zdt;
+    	}else
+    		return ZonedDateTime.parse(data, format);
     }
 
     @Override

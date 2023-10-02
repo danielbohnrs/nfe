@@ -10,6 +10,7 @@ import com.fincatto.documentofiscal.nfe400.classes.statusservico.consulta.NFStat
 import com.fincatto.documentofiscal.nfe400.webservices.statusservico.consulta.NfeStatusServico4Stub;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
+import org.apache.commons.httpclient.protocol.Protocol;
 
 import java.rmi.RemoteException;
 
@@ -41,7 +42,7 @@ class WSStatusConsulta implements DFLog {
         return consStatServ;
     }
     
-    private OMElement efetuaConsultaStatus(final OMElement omElement, final DFUnidadeFederativa unidadeFederativa, final DFModelo modelo) throws RemoteException {
+    private OMElement efetuaConsultaStatus(final OMElement omElement, final DFUnidadeFederativa unidadeFederativa, final DFModelo modelo) throws Exception {
         final NfeStatusServico4Stub.NfeDadosMsg dados = new NfeStatusServico4Stub.NfeDadosMsg();
         dados.setExtraElement(omElement);
         
@@ -50,6 +51,9 @@ class WSStatusConsulta implements DFLog {
         if (endpoint == null) {
             throw new IllegalArgumentException("Nao foi possivel encontrar URL para StatusServico " + modelo.name() + ", autorizador " + autorizador.name() + ", UF " + unidadeFederativa.name());
         }
-        return new NfeStatusServico4Stub(endpoint, config).nfeStatusServicoNF(dados).getExtraElement();
+        Protocol.registerProtocol("https", config.createProtocol());//DJB-06/06/2022
+        OMElement ret = new NfeStatusServico4Stub(endpoint, config).nfeStatusServicoNF(dados).getExtraElement();
+        Protocol.unregisterProtocol("https");//DJB-06/06/2022
+        return ret;
     }
 }

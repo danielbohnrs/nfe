@@ -43,6 +43,7 @@ public class WSFacade {
     private final WSEpec wsEpec;
 
     public WSFacade(final NFeConfig config) throws KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException {
+    	//DJB-06/06/2022 poderia ser removido daqui, pq agora é feito antes de executar de fato as operações dos webservices, tentando prevenir erro de estar usando certificado errado
     	Protocol.registerProtocol("https", config.createProtocol());
         
         // inicia os servicos disponiveis da nfe
@@ -58,6 +59,7 @@ public class WSFacade {
         this.wSDistribuicaoNFe = new WSDistribuicaoNFe(config);
         this.wsEpec = new WSEpec(config);
     }
+    
 
     /**
      * Faz o envio de lote para a Sefaz.

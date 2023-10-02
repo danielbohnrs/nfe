@@ -1,5 +1,17 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
+import java.io.StringReader;
+import java.util.Iterator;
+
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+
+import org.apache.axiom.om.OMElement;
+import org.apache.axiom.om.impl.builder.StAXOMBuilder;
+import org.apache.commons.httpclient.protocol.Protocol;
+import org.apache.commons.lang3.StringUtils;
+
 import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.nfe.NFTipoEmissao;
@@ -18,15 +30,6 @@ import com.fincatto.documentofiscal.nfe400.webservices.gerado.NFeAutorizacao4Stu
 import com.fincatto.documentofiscal.nfe400.webservices.gerado.NFeAutorizacao4Stub.NfeResultMsg;
 import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
 import com.fincatto.documentofiscal.validadores.DFXMLValidador;
-import org.apache.axiom.om.OMElement;
-import org.apache.axiom.om.impl.builder.StAXOMBuilder;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
-import java.io.StringReader;
-import java.util.Iterator;
 
 class WSLoteEnvio implements DFLog {
 
@@ -71,7 +74,8 @@ class WSLoteEnvio implements DFLog {
         // verifica se nao tem NFCe junto com NFe no lote e gera qrcode (apos assinar mesmo, eh assim)
         int qtdNF = 0, qtdNFC = 0, i=0;
         for (final NFNota nota : loteAssinado.getNotas()) {
-        	nota.getInfo().getDestinatario().setIdEstrangeiro(lote.getNotas().get(i).getInfo().getDestinatario().getIdEstrangeiro());//precisa persistir este dado, mesmo que seja vazio
+        	if (nota.getInfo().getDestinatario()!=null)//NFCe pode não ter destinatario
+        		nota.getInfo().getDestinatario().setIdEstrangeiro(lote.getNotas().get(i).getInfo().getDestinatario().getIdEstrangeiro());//precisa persistir este dado, mesmo que seja vazio
             switch (nota.getInfo().getIdentificacao().getModelo()) {
                 case NFE:
                     qtdNF++;
@@ -146,8 +150,10 @@ class WSLoteEnvio implements DFLog {
             throw new IllegalArgumentException("Nao foi possivel encontrar URL para Autorizacao " + modelo.name()
                     + ", autorizador " + autorizador.name());
         }
-
-        return new NFeAutorizacao4Stub(endpoint, config).nfeAutorizacaoLote(dados);
+        Protocol.registerProtocol("https", config.createProtocol());//DJB-06/06/2022
+        NfeResultMsg ret =  new NFeAutorizacao4Stub(endpoint, config).nfeAutorizacaoLote(dados);
+        Protocol.unregisterProtocol("https");//DJB-06/06/2022
+        return ret;
     }
 
     private OMElement nfeToOMElement(final String documento) throws XMLStreamException {

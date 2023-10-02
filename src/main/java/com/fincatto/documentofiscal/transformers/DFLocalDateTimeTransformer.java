@@ -19,7 +19,11 @@ public class DFLocalDateTimeTransformer implements Transform<LocalDateTime> {
         	try {
             	return LocalDateTime.parse(data, DFLocalDateTimeTransformer.DATETIME_FORMATTER_2);
 			} catch (Exception e2) {
-	            return LocalDateTime.from(DFLocalDateTimeTransformer.SIMPLE_DATETIME_FORMATTER.parse(data));
+				try{
+					return LocalDateTime.from(DFLocalDateTimeTransformer.SIMPLE_DATETIME_FORMATTER.parse(data));
+				}catch(Exception e4){
+					return LocalDateTime.from(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").parse(data));//DJB-07/06/2022
+				}
 			}
         }
     }

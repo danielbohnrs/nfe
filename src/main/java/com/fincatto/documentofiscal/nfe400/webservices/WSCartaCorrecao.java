@@ -16,6 +16,7 @@ import com.fincatto.documentofiscal.nfe400.webservices.gerado.NFeRecepcaoEvento4
 import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
+import org.apache.commons.httpclient.protocol.Protocol;
 
 import javax.xml.stream.XMLStreamException;
 import java.math.BigDecimal;
@@ -64,7 +65,7 @@ class WSCartaCorrecao implements DFLog {
         return this.config.getPersister().read(NFEnviaEventoRetorno.class, omElementResult.toString());
     }
     
-    private OMElement efetuaCorrecao(final String xmlAssinado, final String chaveAcesso) throws XMLStreamException, RemoteException {
+    private OMElement efetuaCorrecao(final String xmlAssinado, final String chaveAcesso) throws Exception {
         final NFeRecepcaoEvento4Stub.NfeDadosMsg dados = new NFeRecepcaoEvento4Stub.NfeDadosMsg();
         final OMElement omElementXML = AXIOMUtil.stringToOM(xmlAssinado);
         this.getLogger().debug(omElementXML.toString());
@@ -78,7 +79,9 @@ class WSCartaCorrecao implements DFLog {
             throw new IllegalArgumentException("Nao foi possivel encontrar URL para RecepcaoEvento " + parser.getModelo().name() + ", autorizador " + autorizacao.name());
         }
         
+        Protocol.registerProtocol("https", config.createProtocol());//DJB-06/06/2022
         final NfeResultMsg nfeRecepcaoEvento = new NFeRecepcaoEvento4Stub(urlWebService, config).nfeRecepcaoEvento(dados);
+        Protocol.unregisterProtocol("https");//DJB-06/06/2022
         final OMElement omElementResult = nfeRecepcaoEvento.getExtraElement();
         this.getLogger().debug(omElementResult.toString());
         return omElementResult;

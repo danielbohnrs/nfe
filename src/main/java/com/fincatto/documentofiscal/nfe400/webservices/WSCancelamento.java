@@ -15,6 +15,7 @@ import com.fincatto.documentofiscal.nfe400.webservices.gerado.NFeRecepcaoEvento4
 import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
+import org.apache.commons.httpclient.protocol.Protocol;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -57,8 +58,9 @@ class WSCancelamento implements DFLog {
         if (urlWebService == null) {
             throw new IllegalArgumentException("Nao foi possivel encontrar URL para RecepcaoEvento " + parser.getModelo().name() + ", autorizador " + autorizador.name());
         }
-        
+        Protocol.registerProtocol("https", config.createProtocol());//DJB-06/06/2022
         final NfeResultMsg nfeRecepcaoEvento = new NFeRecepcaoEvento4Stub(urlWebService, config).nfeRecepcaoEvento(dados);
+        Protocol.unregisterProtocol("https");//DJB-06/06/2022
         final OMElement omElementResult = nfeRecepcaoEvento.getExtraElement();
         this.getLogger().debug(omElementResult.toString());
         return omElementResult;

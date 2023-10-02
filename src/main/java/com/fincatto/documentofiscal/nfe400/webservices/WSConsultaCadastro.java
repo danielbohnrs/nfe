@@ -12,6 +12,7 @@ import com.fincatto.documentofiscal.nfe400.webservices.consultacadastro.CadConsu
 import com.fincatto.documentofiscal.nfe400.webservices.consultacadastro.MTCadConsultaCadastro4Stub;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
+import org.apache.commons.httpclient.protocol.Protocol;
 
 class WSConsultaCadastro implements DFLog {
     
@@ -46,11 +47,17 @@ class WSConsultaCadastro implements DFLog {
             MTCadConsultaCadastro4Stub.NfeDadosMsg_type0 dadosMsg = new MTCadConsultaCadastro4Stub.NfeDadosMsg_type0();
             dadosMsg.setExtraElement(omElementConsulta);
             consultaCadastro.setNfeDadosMsg(dadosMsg);
-            return new MTCadConsultaCadastro4Stub(urlConsulta).consultaCadastro(consultaCadastro).getConsultaCadastroResult().getExtraElement();
+            Protocol.registerProtocol("https", config.createProtocol());//DJB-06/06/2022
+            OMElement ret = new MTCadConsultaCadastro4Stub(urlConsulta).consultaCadastro(consultaCadastro).getConsultaCadastroResult().getExtraElement();
+            Protocol.unregisterProtocol("https");//DJB-06/06/2022
+            return ret;
         } else {
             final NfeDadosMsg nfeDadosMsg_type0 = new NfeDadosMsg();
             nfeDadosMsg_type0.setExtraElement(omElementConsulta);
-            return new CadConsultaCadastro4Stub(urlConsulta, config).consultaCadastro(nfeDadosMsg_type0).getExtraElement();
+            Protocol.registerProtocol("https", config.createProtocol());//DJB-06/06/2022
+            OMElement ret = new CadConsultaCadastro4Stub(urlConsulta, config).consultaCadastro(nfeDadosMsg_type0).getExtraElement();
+            Protocol.unregisterProtocol("https");//DJB-06/06/2022
+            return ret;
         }
     }
     

@@ -12,6 +12,7 @@ import com.fincatto.documentofiscal.nfe400.webservices.gerado.NFeInutilizacao4St
 import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;
+import org.apache.commons.httpclient.protocol.Protocol;
 import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
@@ -46,7 +47,9 @@ class WSInutilizacao implements DFLog {
         
         final NFAutorizador400 autorizador = NFAutorizador400.valueOfCodigoUF(this.config.getCUF());
         final String urlWebService = DFModelo.NFE.equals(modelo) ? autorizador.getNfeInutilizacao(this.config.getAmbiente()) : autorizador.getNfceInutilizacao(this.config.getAmbiente());
+        Protocol.registerProtocol("https", config.createProtocol());//DJB-06/06/2022
         final NfeResultMsg nf4Result = new NFeInutilizacao4Stub(urlWebService, config).nfeInutilizacaoNF(dados);
+        Protocol.unregisterProtocol("https");//DJB-06/06/2022
         final OMElement dadosRetorno = nf4Result.getExtraElement();
         this.getLogger().debug(dadosRetorno.toString());
         return dadosRetorno;
