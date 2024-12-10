@@ -27,7 +27,7 @@ public class NFNotaInfoICMSTotal extends DFBase {
     @Element(name = "vICMSUFRemet", required = false)
     private String valorICMSPartilhaRementente;
     
-    @Element(name = "vFCP")
+    @Element(name = "vFCP", required = false)
     private String valorTotalFundoCombatePobreza;
     
     @Element(name = "vBCST")
