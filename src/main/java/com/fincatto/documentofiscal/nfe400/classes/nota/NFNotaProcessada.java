@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public class NFNotaProcessada extends DFBase {
     private static final long serialVersionUID = 6979476565566044621L;
 
-    @Attribute(name = "versao")
+    @Attribute(name = "versao", required = false)
     private String versao;
 
     @Attribute(name = "schemaLocation", required = false)
