@@ -12,13 +12,13 @@ public class NFNotaInfoItemProdutoMedicamento extends DFBase {
     
     @Element(name = "cProdANVISA")
     private String codigoProdutoAnvisa;
-    
-    @Element(name = "vPMC")
-    private String precoMaximoConsumidor;
-    
+
     @Element(name = "xMotivoIsencao", required = false)
     private String motivoIsencao;
-    
+
+    @Element(name = "vPMC")
+    private String precoMaximoConsumidor;
+
     public NFNotaInfoItemProdutoMedicamento() {
         this.codigoProdutoAnvisa = null;
         this.precoMaximoConsumidor = null;
@@ -29,7 +29,7 @@ public class NFNotaInfoItemProdutoMedicamento extends DFBase {
     }
     
     public NFNotaInfoItemProdutoMedicamento setCodigoProdutoAnvisa(final String codigoProdutoAnvisa) {
-        DFStringValidador.exatamente13(codigoProdutoAnvisa, "C\u00f3digo produto anvisa");
+        DFStringValidador.codigoProdutoAnvisa(codigoProdutoAnvisa, "C\u00f3digo produto anvisa");
         this.codigoProdutoAnvisa = codigoProdutoAnvisa;
         return this;
     }

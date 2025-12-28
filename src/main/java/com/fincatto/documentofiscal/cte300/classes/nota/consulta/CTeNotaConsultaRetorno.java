@@ -4,8 +4,7 @@ import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFBase;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.cte300.classes.enviolote.consulta.CTeProtocolo;
-import com.fincatto.documentofiscal.cte300.classes.evento.cancelamento.CTeProtocoloEventoCancelamento;
-import com.fincatto.documentofiscal.cte300.classes.evento.cancelamento.CTeRetornoCancelamento;
+
 import org.simpleframework.xml.*;
 
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.List;
 public class CTeNotaConsultaRetorno extends DFBase {
     private static final long serialVersionUID = 3229234247371007557L;
     
-    @Attribute(name = "versao")
+    @Attribute(name = "versao", required = false)
     private String versao;
     
     @Element(name = "tpAmb")
@@ -36,11 +35,8 @@ public class CTeNotaConsultaRetorno extends DFBase {
     @Element(name = "protCTe", required = false)
     protected CTeProtocolo protocolo;
 
-    @Element(name = "retCancCTe", required = false)
-    private CTeRetornoCancelamento protocoloCancelamento;
-
     @ElementList(entry = "procEventoCTe", inline = true, required = false)
-    private List<CTeProtocoloEventoCancelamento> protocoloEvento;
+    private List<CTeProtocoloEvento> protocoloEvento;
 
     public CTeNotaConsultaRetorno() {
         this.versao = null;
@@ -108,4 +104,11 @@ public class CTeNotaConsultaRetorno extends DFBase {
         this.protocolo = protocolo;
     }
 
+    public List<CTeProtocoloEvento> getProtocoloEvento() {
+        return protocoloEvento;
+    }
+
+    public void setProtocoloEvento(List<CTeProtocoloEvento> protocoloEvento) {
+        this.protocoloEvento = protocoloEvento;
+    }
 }

@@ -1,28 +1,177 @@
 package com.fincatto.documentofiscal.transformers;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.YearMonth;
+import java.time.ZonedDateTime;
+
+import com.fincatto.documentofiscal.nfe400.classes.evento.NFEventoTipoAutor;
+import com.fincatto.documentofiscal.nfe400.transformers.NFEventoTipoAutorTransformer;
+import org.simpleframework.xml.transform.RegistryMatcher;
+
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFPais;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
-import com.fincatto.documentofiscal.cte200.classes.*;
-import com.fincatto.documentofiscal.cte200.transformers.*;
-import com.fincatto.documentofiscal.mdfe3.classes.def.*;
-import com.fincatto.documentofiscal.mdfe3.transformers.*;
+import com.fincatto.documentofiscal.cte200.classes.CTFormaPagamento;
+import com.fincatto.documentofiscal.cte200.classes.CTIdentificadorEmissor;
+import com.fincatto.documentofiscal.cte200.classes.CTModal;
+import com.fincatto.documentofiscal.cte200.classes.CTResponsavelSeguro;
+import com.fincatto.documentofiscal.cte200.classes.CTRetiraMercadoria;
+import com.fincatto.documentofiscal.cte200.classes.CTTipoCte;
+import com.fincatto.documentofiscal.cte200.classes.CTTipoDocumentoOutro;
+import com.fincatto.documentofiscal.cte200.classes.CTTipoDocumentoTransporteAnterior;
+import com.fincatto.documentofiscal.cte200.classes.CTTipoEmissao;
+import com.fincatto.documentofiscal.cte200.classes.CTTipoEntregaData;
+import com.fincatto.documentofiscal.cte200.classes.CTTipoEntregaHorario;
+import com.fincatto.documentofiscal.cte200.classes.CTTipoImpressao;
+import com.fincatto.documentofiscal.cte200.classes.CTTipoServico;
+import com.fincatto.documentofiscal.cte200.classes.CTTipoUnidadeCarga;
+import com.fincatto.documentofiscal.cte200.classes.CTTipoUnidadeTransporte;
+import com.fincatto.documentofiscal.cte200.classes.CTTomadorServico;
+import com.fincatto.documentofiscal.cte200.classes.CTUnidadeMedida;
+import com.fincatto.documentofiscal.cte200.transformers.CTFormaPagamentoTransformer;
+import com.fincatto.documentofiscal.cte200.transformers.CTIdentificadorEmissorTransformer;
+import com.fincatto.documentofiscal.cte200.transformers.CTModalTransformer;
+import com.fincatto.documentofiscal.cte200.transformers.CTResponsavelSeguroTransformer;
+import com.fincatto.documentofiscal.cte200.transformers.CTRetiraMercadoriaTransformer;
+import com.fincatto.documentofiscal.cte200.transformers.CTTipoCteTransformer;
+import com.fincatto.documentofiscal.cte200.transformers.CTTipoDocumentoOutroTransformer;
+import com.fincatto.documentofiscal.cte200.transformers.CTTipoDocumentoTransporteAnteriorTransformer;
+import com.fincatto.documentofiscal.cte200.transformers.CTTipoEmissaoTransformer;
+import com.fincatto.documentofiscal.cte200.transformers.CTTipoEntregaDataTransformer;
+import com.fincatto.documentofiscal.cte200.transformers.CTTipoEntregaHorarioTransformer;
+import com.fincatto.documentofiscal.cte200.transformers.CTTipoImpressaoTransformer;
+import com.fincatto.documentofiscal.cte200.transformers.CTTipoServicoTransformer;
+import com.fincatto.documentofiscal.cte200.transformers.CTTipoUnidadeCargaTransformer;
+import com.fincatto.documentofiscal.cte200.transformers.CTTipoUnidadeTransporteTransformer;
+import com.fincatto.documentofiscal.cte200.transformers.CTTomadorServicoTransformer;
+import com.fincatto.documentofiscal.cte200.transformers.CTUnidadeMedidaTransformer;
+import com.fincatto.documentofiscal.mdfe3.classes.def.MDFModalidadeTransporte;
+import com.fincatto.documentofiscal.mdfe3.classes.def.MDFProcessoEmissao;
+import com.fincatto.documentofiscal.mdfe3.classes.def.MDFTipoCargaProdutoPredominante;
+import com.fincatto.documentofiscal.mdfe3.classes.def.MDFTipoCarroceria;
+import com.fincatto.documentofiscal.mdfe3.classes.def.MDFTipoEmissao;
+import com.fincatto.documentofiscal.mdfe3.classes.def.MDFTipoEmitente;
+import com.fincatto.documentofiscal.mdfe3.classes.def.MDFTipoIndAltoDesempenho;
+import com.fincatto.documentofiscal.mdfe3.classes.def.MDFTipoInfPag;
+import com.fincatto.documentofiscal.mdfe3.classes.def.MDFTipoInfPagComp;
+import com.fincatto.documentofiscal.mdfe3.classes.def.MDFTipoPermissaoAntecipacao;
+import com.fincatto.documentofiscal.mdfe3.classes.def.MDFTipoProprietario;
+import com.fincatto.documentofiscal.mdfe3.classes.def.MDFTipoResponsavelSeguro;
+import com.fincatto.documentofiscal.mdfe3.classes.def.MDFTipoRodado;
+import com.fincatto.documentofiscal.mdfe3.classes.def.MDFTipoTranportador;
+import com.fincatto.documentofiscal.mdfe3.classes.def.MDFTipoUnidadeCarga;
+import com.fincatto.documentofiscal.mdfe3.classes.def.MDFTipoUnidadeTransporte;
+import com.fincatto.documentofiscal.mdfe3.classes.def.MDFTipoValePedagio;
+import com.fincatto.documentofiscal.mdfe3.classes.def.MDFUnidadeMedidaPesoBrutoCarga;
+import com.fincatto.documentofiscal.mdfe3.transformers.MDFModalidadeTransporteTransformer;
+import com.fincatto.documentofiscal.mdfe3.transformers.MDFProcessoEmissaoTransformer;
+import com.fincatto.documentofiscal.mdfe3.transformers.MDFTipoCargaProdutoPredominanteTransformer;
+import com.fincatto.documentofiscal.mdfe3.transformers.MDFTipoCarroceriaTransformer;
+import com.fincatto.documentofiscal.mdfe3.transformers.MDFTipoEmissaoTransformer;
+import com.fincatto.documentofiscal.mdfe3.transformers.MDFTipoEmitenteTransformer;
+import com.fincatto.documentofiscal.mdfe3.transformers.MDFTipoIndAltoDesempenhoTransformer;
+import com.fincatto.documentofiscal.mdfe3.transformers.MDFTipoInfPagCompTransformer;
+import com.fincatto.documentofiscal.mdfe3.transformers.MDFTipoInfPagTransformer;
+import com.fincatto.documentofiscal.mdfe3.transformers.MDFTipoPermissaoAntecipacaoTransformer;
+import com.fincatto.documentofiscal.mdfe3.transformers.MDFTipoProprietarioTransformer;
+import com.fincatto.documentofiscal.mdfe3.transformers.MDFTipoResponsavelSeguroTransformer;
+import com.fincatto.documentofiscal.mdfe3.transformers.MDFTipoRodadoTransformer;
+import com.fincatto.documentofiscal.mdfe3.transformers.MDFTipoTranportadorTransformer;
+import com.fincatto.documentofiscal.mdfe3.transformers.MDFTipoUnidadeCargaTransformer;
+import com.fincatto.documentofiscal.mdfe3.transformers.MDFTipoUnidadeTransporteTransformer;
+import com.fincatto.documentofiscal.mdfe3.transformers.MDFTipoValePedagioTransformer;
+import com.fincatto.documentofiscal.mdfe3.transformers.MDFUnidadeMedidaPesoBrutoCargaTransformer;
 import com.fincatto.documentofiscal.nfe.NFTipoEmissao;
 import com.fincatto.documentofiscal.nfe.transformers.NFTipoEmissaoTransformer;
-import com.fincatto.documentofiscal.nfe310.classes.*;
+import com.fincatto.documentofiscal.nfe310.classes.NFFinalidade;
+import com.fincatto.documentofiscal.nfe310.classes.NFFormaPagamentoPrazo;
+import com.fincatto.documentofiscal.nfe310.classes.NFModalidadeFrete;
+import com.fincatto.documentofiscal.nfe310.classes.NFNotaInfoCombustivelTipo;
+import com.fincatto.documentofiscal.nfe310.classes.NFNotaInfoEspecieVeiculo;
+import com.fincatto.documentofiscal.nfe310.classes.NFNotaInfoImpostoTributacaoICMS;
+import com.fincatto.documentofiscal.nfe310.classes.NFNotaInfoItemModalidadeBCICMS;
+import com.fincatto.documentofiscal.nfe310.classes.NFNotaInfoItemModalidadeBCICMSST;
+import com.fincatto.documentofiscal.nfe310.classes.NFNotaInfoItemProdutoArmamentoTipo;
+import com.fincatto.documentofiscal.nfe310.classes.NFNotaInfoItemProdutoVeiculoCondicao;
+import com.fincatto.documentofiscal.nfe310.classes.NFNotaInfoItemProdutoVeiculoCondicaoChassi;
+import com.fincatto.documentofiscal.nfe310.classes.NFNotaInfoItemProdutoVeiculoRestricao;
+import com.fincatto.documentofiscal.nfe310.classes.NFNotaInfoItemProdutoVeiculoTipoOperacao;
+import com.fincatto.documentofiscal.nfe310.classes.NFNotaInfoSituacaoTributariaCOFINS;
+import com.fincatto.documentofiscal.nfe310.classes.NFNotaInfoSituacaoTributariaIPI;
+import com.fincatto.documentofiscal.nfe310.classes.NFNotaInfoSituacaoTributariaPIS;
+import com.fincatto.documentofiscal.nfe310.classes.NFNotaInfoTipoVeiculo;
+import com.fincatto.documentofiscal.nfe310.classes.NFNotaInfoVeiculoCor;
+import com.fincatto.documentofiscal.nfe310.classes.NFNotaMotivoDesoneracaoICMS;
+import com.fincatto.documentofiscal.nfe310.classes.NFNotaSituacaoOperacionalSimplesNacional;
+import com.fincatto.documentofiscal.nfe310.classes.NFOrigem;
+import com.fincatto.documentofiscal.nfe310.classes.NFOrigemProcesso;
+import com.fincatto.documentofiscal.nfe310.classes.NFProcessoEmissor;
+import com.fincatto.documentofiscal.nfe310.classes.NFProdutoCompoeValorNota;
+import com.fincatto.documentofiscal.nfe310.classes.NFRegimeTributario;
+import com.fincatto.documentofiscal.nfe310.classes.NFTipo;
+import com.fincatto.documentofiscal.nfe310.classes.NFTipoImpressao;
 import com.fincatto.documentofiscal.nfe310.classes.cadastro.NFIndicadorContribuinteCTe;
 import com.fincatto.documentofiscal.nfe310.classes.cadastro.NFIndicadorContribuinteNFe;
 import com.fincatto.documentofiscal.nfe310.classes.cadastro.NFSituacaoContribuinte;
 import com.fincatto.documentofiscal.nfe310.classes.lote.envio.NFLoteIndicadorProcessamento;
-import com.fincatto.documentofiscal.nfe310.classes.nota.*;
-import com.fincatto.documentofiscal.nfe310.transformers.*;
-import org.simpleframework.xml.transform.RegistryMatcher;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
+import com.fincatto.documentofiscal.nfe310.classes.nota.NFFormaImportacaoIntermediacao;
+import com.fincatto.documentofiscal.nfe310.classes.nota.NFFormaPagamentoMoeda;
+import com.fincatto.documentofiscal.nfe310.classes.nota.NFIdentificadorLocalDestinoOperacao;
+import com.fincatto.documentofiscal.nfe310.classes.nota.NFIndicadorIEDestinatario;
+import com.fincatto.documentofiscal.nfe310.classes.nota.NFIndicadorPresencaComprador;
+import com.fincatto.documentofiscal.nfe310.classes.nota.NFNotaInfoItemIndicadorExigibilidadeISS;
+import com.fincatto.documentofiscal.nfe310.classes.nota.NFNotaInfoItemIndicadorIncentivoFiscal;
+import com.fincatto.documentofiscal.nfe310.classes.nota.NFNotaInfoRegimeEspecialTributacao;
+import com.fincatto.documentofiscal.nfe310.classes.nota.NFOperacaoConsumidorFinal;
+import com.fincatto.documentofiscal.nfe310.classes.nota.NFOperadoraCartao;
+import com.fincatto.documentofiscal.nfe310.classes.nota.NFTipoIntegracaoPagamento;
+import com.fincatto.documentofiscal.nfe310.classes.nota.NFViaTransporteInternacional;
+import com.fincatto.documentofiscal.nfe310.transformers.NFFinalidadeTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFFormaImportacaoIntermediacaoTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFFormaPagamentoMoedaTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFFormaPagamentoTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFIdentificadorLocalDestinoOperacaoTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFIndicadorContribuinteCTTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFIndicadorContribuinteNFeTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFIndicadorIEDestinatarioTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFIndicadorPresencaCompradorTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFLoteIndicadorProcessamentoTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFModalidadeFreteTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFNotaInfoCombustivelTipoTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFNotaInfoEspecieVeiculoTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFNotaInfoImpostoTributacaoICMSTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFNotaInfoItemIndicadorExigibilidadeISSTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFNotaInfoItemIndicadorIncentivoFiscalTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFNotaInfoItemModalidadeBCICMSTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFNotaInfoItemProdutoArmamentoTipoTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFNotaInfoItemProdutoVeiculoCondicaoChassiTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFNotaInfoItemProdutoVeiculoCondicaoTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFNotaInfoItemProdutoVeiculoRestricaoTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFNotaInfoItemProdutoVeiculoTipoOperacaoTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFNotaInfoRegimeEspecialTributacaoTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFNotaInfoSituacaoTributariaCOFINSTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFNotaInfoSituacaoTributariaIPITransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFNotaInfoSituacaoTributariaPISTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFNotaInfoTipoVeiculoTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFNotaInfoVeiculoCorTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFNotaMotivoDesoneracaoICMSTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFNotaSituacaoOperacionalSimplesNacionalTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFOperacaoConsumidorFinalTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFOperadoraCartaoTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFOrigemProcessoTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFOrigemTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFProdutoCompoeValorNotaTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFProgramaEmissorTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFRegimeTributarioTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFSituacaoContribuinteTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFTipoImpressaoTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFTipoIntegracaoPagamentoTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFTipoTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFViaTransporteInternacionalTransformer;
+import com.fincatto.documentofiscal.nfe310.transformers.NFnotaInfoItemModalidadeBCICMSSTTransformer;
 
 public class DFRegistryMatcher extends RegistryMatcher {
 
@@ -33,6 +182,7 @@ public class DFRegistryMatcher extends RegistryMatcher {
         super.bind(LocalTime.class, new DFLocalTimeTransformer());
         super.bind(ZonedDateTime.class, new DFDateTimeTransformer());
         super.bind(LocalDateTime.class, new DFLocalDateTimeTransformer());
+        super.bind(YearMonth.class, new DFYearMonthTransformer());
         super.bind(ZonedDateTime.class, new DFZonedDateTimeTransformer());
         super.bind(DFUnidadeFederativa.class, new DFUnidadeFederativaTransformer());
         super.bind(NFTipoEmissao.class, new NFTipoEmissaoTransformer());
@@ -85,6 +235,7 @@ public class DFRegistryMatcher extends RegistryMatcher {
 
         // NFE 4.00
         super.bind(com.fincatto.documentofiscal.nfe400.classes.NFTipo.class, new com.fincatto.documentofiscal.nfe400.transformers.NFTipoTransformer());
+        super.bind(com.fincatto.documentofiscal.nfe400.classes.NFTipoDeducaoIcms.class, new com.fincatto.documentofiscal.nfe400.transformers.NFTipoDeducaoIcmsTransformer());
         super.bind(com.fincatto.documentofiscal.nfe400.classes.NFOrigem.class, new com.fincatto.documentofiscal.nfe400.transformers.NFOrigemTransformer());
         super.bind(com.fincatto.documentofiscal.nfe400.classes.NFSituacao.class, new com.fincatto.documentofiscal.nfe400.transformers.NFSituacaoTransformer());
         super.bind(com.fincatto.documentofiscal.nfe400.classes.NFFinalidade.class, new com.fincatto.documentofiscal.nfe400.transformers.NFFinalidadeTransformer());
@@ -130,7 +281,20 @@ public class DFRegistryMatcher extends RegistryMatcher {
         super.bind(com.fincatto.documentofiscal.nfe400.classes.NFNotaInfoItemProdutoVeiculoCondicaoChassi.class, new com.fincatto.documentofiscal.nfe400.transformers.NFNotaInfoItemProdutoVeiculoCondicaoChassiTransformer());
         super.bind(com.fincatto.documentofiscal.nfe400.classes.NFNotaInfoItemModalidadeBCICMS.class, new com.fincatto.documentofiscal.nfe400.transformers.NFNotaInfoItemModalidadeBCICMSTransformer());
         super.bind(com.fincatto.documentofiscal.nfe400.classes.nota.NFIndicadorIntermediador.class, new com.fincatto.documentofiscal.nfe400.transformers.NFIndicadorIntermediadorTransformer());
-        
+        super.bind(com.fincatto.documentofiscal.nfe400.classes.nota.NFTipoAtoConcessorio.class, new com.fincatto.documentofiscal.nfe400.transformers.NFTipoAtoConcessorioTransformer());
+        super.bind(com.fincatto.documentofiscal.nfe400.classes.nota.NFIndicadorSomaCofinsST.class, new com.fincatto.documentofiscal.nfe400.transformers.NFIndicadorSomaCofinsSTTransformer());
+        super.bind(com.fincatto.documentofiscal.nfe400.classes.nota.NFIndicadorSomaPISST.class, new com.fincatto.documentofiscal.nfe400.transformers.NFIndicadorSomaPISSTTransformer());
+        super.bind(com.fincatto.documentofiscal.nfe400.classes.NFNotaMotivoReducaoADREM.class, new com.fincatto.documentofiscal.nfe400.transformers.NFNotaMotivoReducaoADREMTransformer());
+        super.bind(com.fincatto.documentofiscal.nfe400.classes.nota.NFIndicadorImportacao.class, new com.fincatto.documentofiscal.nfe400.transformers.NFIndicadorImportacaoTransformer());
+        super.bind(com.fincatto.documentofiscal.nfe400.classes.NFNotaInfoAgropecuarioTipoGuia.class, new com.fincatto.documentofiscal.nfe400.transformers.NFNotaInfoAgropecuarioTipoGuiaTransformer());
+
+        // Reforma tributaria
+        super.bind(com.fincatto.documentofiscal.nfe400.classes.NFNotaInfoImpostoTributacaoIS.class, new com.fincatto.documentofiscal.nfe400.transformers.NFNotaInfoImpostoTributacaoISTransformer());
+        super.bind(com.fincatto.documentofiscal.nfe400.classes.NFNotaInfoImpostoTributacaoIBSCBS.class, new com.fincatto.documentofiscal.nfe400.transformers.NFNotaInfoImpostoTributacaoIBSCBSTransformer());
+        super.bind(com.fincatto.documentofiscal.nfe400.classes.NFDebito.class, new com.fincatto.documentofiscal.nfe400.transformers.NFDebitoTransformer());
+        super.bind(com.fincatto.documentofiscal.nfe400.classes.NFCredito.class, new com.fincatto.documentofiscal.nfe400.transformers.NFCreditoTransformer());
+
+
         // CTe
         super.bind(CTModal.class, new CTModalTransformer());
         super.bind(CTTipoCte.class, new CTTipoCteTransformer());
@@ -151,7 +315,7 @@ public class DFRegistryMatcher extends RegistryMatcher {
         super.bind(CTTipoDocumentoTransporteAnterior.class, new CTTipoDocumentoTransporteAnteriorTransformer());
 
         // CTe 300
-        super.bind(com.fincatto.documentofiscal.cte300.classes.CTTipoEmissao.class, new com.fincatto.documentofiscal.cte300.transformes.CTTipoEmissaoTransformer());
+        super.bind(com.fincatto.documentofiscal.cte.CTTipoEmissao.class, new com.fincatto.documentofiscal.cte.transformers.CTTipoEmissaoTransformer());
         super.bind(com.fincatto.documentofiscal.cte300.classes.CTFinalidade.class, new com.fincatto.documentofiscal.cte300.transformes.CTFinalidadeTransformes());
         super.bind(com.fincatto.documentofiscal.cte300.classes.CTProcessoEmissao.class, new com.fincatto.documentofiscal.cte300.transformes.CTProcessoEmissaoTransformer());
         super.bind(com.fincatto.documentofiscal.cte300.classes.CTModal.class, new com.fincatto.documentofiscal.cte300.transformes.CTModalTransformer());
@@ -176,13 +340,58 @@ public class DFRegistryMatcher extends RegistryMatcher {
         super.bind(com.fincatto.documentofiscal.cte300.classes.CTTipoTrafego.class, new com.fincatto.documentofiscal.cte300.transformes.CTTipoTrafegoTransformer());
         super.bind(com.fincatto.documentofiscal.cte300.classes.CTTipoFerrovia.class, new com.fincatto.documentofiscal.cte300.transformes.CTTipoFerroviaTransformer());
         super.bind(com.fincatto.documentofiscal.cte300.classes.CTIndicadoNegociavel.class, new com.fincatto.documentofiscal.cte300.transformes.CTIndicadoNegociavelTransformer());
+        super.bind(com.fincatto.documentofiscal.cte300.classes.CTTipoRegimeTributario.class, new com.fincatto.documentofiscal.cte300.transformes.CTTipoRegimeTributarioTransformer());
+        super.bind(com.fincatto.documentofiscal.cte300.classes.CTTipoEspecieGtv.class, new com.fincatto.documentofiscal.cte300.transformes.CTTipoEspecieGtvTransformer());
+        super.bind(com.fincatto.documentofiscal.cte300.classes.CTResponsavelSeguro.class, new com.fincatto.documentofiscal.cte300.transformes.CTResponsavelSeguroTransformer());
+        super.bind(com.fincatto.documentofiscal.cte300.classes.CTTipoFretamento.class, new com.fincatto.documentofiscal.cte300.transformes.CTTipoFretamentoTransformer());
+        super.bind(com.fincatto.documentofiscal.cte300.classes.CTTipoProprietario.class, new com.fincatto.documentofiscal.cte300.transformes.CTTipoProprietarioTransformer());
+        super.bind(com.fincatto.documentofiscal.cte300.classes.CTTipoServicoOS.class, new com.fincatto.documentofiscal.cte300.transformes.CTTipoServicoOSTransformer());
+        super.bind(com.fincatto.documentofiscal.cte300.classes.CTipoComponenteGTVe.class, new com.fincatto.documentofiscal.cte300.transformes.CTipoComponenteGTVeTransformer());
+
+        // CTe 4.00
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTFinalidade.class, new com.fincatto.documentofiscal.cte400.transformers.CTFinalidadeTransformes());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTProcessoEmissao.class, new com.fincatto.documentofiscal.cte400.transformers.CTProcessoEmissaoTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTModal.class, new com.fincatto.documentofiscal.cte400.transformers.CTModalTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTTipoServico.class, new com.fincatto.documentofiscal.cte400.transformers.CTTipoServicoTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTRetirada.class, new com.fincatto.documentofiscal.cte400.transformers.CTRetiradaTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTIndicadorTomador.class, new com.fincatto.documentofiscal.cte400.transformers.CTIndicadorTomadorTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTTipoImpressao.class, new com.fincatto.documentofiscal.cte400.transformers.CTTipoImpressaoTransformes());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTTomadorServico.class, new com.fincatto.documentofiscal.cte400.transformers.CTTomadorServicoTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTTipoPrazoDataEntrega.class, new com.fincatto.documentofiscal.cte400.transformers.CTTipoPrazoDataEntregaTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTTipoPrazoHoraEntrega.class, new com.fincatto.documentofiscal.cte400.transformers.CTTipoPrazoHoraEntregaTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTUnidadeMedida.class, new com.fincatto.documentofiscal.cte400.transformers.CTUnidadeMedidaTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTModeloNF.class, new com.fincatto.documentofiscal.cte400.transformers.CTModeloNFTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTTipoUnidadeCarga.class, new com.fincatto.documentofiscal.cte400.transformers.CTTipoUnidadeCargaTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTTipoUnidadeTransporte.class, new com.fincatto.documentofiscal.cte400.transformers.CTTipoUnidadeTransporteTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTTipoDocumento.class, new com.fincatto.documentofiscal.cte400.transformers.CTTipoDocumentoTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTTipoDocumentoTransporteAnterior.class, new com.fincatto.documentofiscal.cte400.transformers.CTTipoDocumentoTransporteAnteriorTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTCodigoSituacaoTributariaICMS.class, new com.fincatto.documentofiscal.cte400.transformers.CTCodigoSituacaoTributariaICMSTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTInformacoesManuseio.class, new com.fincatto.documentofiscal.cte400.transformers.CTInformacoesManuseioTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTClasseTarifa.class, new com.fincatto.documentofiscal.cte400.transformers.CTClasseTarifaTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTUnidadeMedidaProdPerigosos.class, new com.fincatto.documentofiscal.cte400.transformers.CTUnidadeMedidaProdPerigososTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTTipoDirecao.class, new com.fincatto.documentofiscal.cte400.transformers.CTTipoDirecaoTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTTipoTrafego.class, new com.fincatto.documentofiscal.cte400.transformers.CTTipoTrafegoTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTTipoFerrovia.class, new com.fincatto.documentofiscal.cte400.transformers.CTTipoFerroviaTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTIndicadoNegociavel.class, new com.fincatto.documentofiscal.cte400.transformers.CTIndicadoNegociavelTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTTipoRegimeTributario.class, new com.fincatto.documentofiscal.cte400.transformers.CTTipoRegimeTributarioTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTTipoEspecieGtv.class, new com.fincatto.documentofiscal.cte400.transformers.CTTipoEspecieGtvTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTMotivoInsucesso.class, new com.fincatto.documentofiscal.cte400.transformers.CTMotivoInsucessoTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTResponsavelSeguro.class, new com.fincatto.documentofiscal.cte400.transformers.CTResponsavelSeguroTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTTipoFretamento.class, new com.fincatto.documentofiscal.cte400.transformers.CTTipoFretamentoTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTTipoProprietario.class, new com.fincatto.documentofiscal.cte400.transformers.CTTipoProprietarioTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTTipoServicoOS.class, new com.fincatto.documentofiscal.cte400.transformers.CTTipoServicoOSTransformer());
+        super.bind(com.fincatto.documentofiscal.cte400.classes.CTipoComponenteGTVe.class, new com.fincatto.documentofiscal.cte400.transformers.CTipoComponenteGTVeTransformer());
+
 
         // MDF-e
         super.bind(MDFModalidadeTransporte.class, new MDFModalidadeTransporteTransformer());
         super.bind(MDFProcessoEmissao.class, new MDFProcessoEmissaoTransformer());
+        super.bind(MDFTipoCargaProdutoPredominante.class, new MDFTipoCargaProdutoPredominanteTransformer());
         super.bind(MDFTipoCarroceria.class, new MDFTipoCarroceriaTransformer());
         super.bind(MDFTipoEmissao.class, new MDFTipoEmissaoTransformer());
         super.bind(MDFTipoEmitente.class, new MDFTipoEmitenteTransformer());
+        super.bind(MDFTipoInfPag.class, new MDFTipoInfPagTransformer());
+        super.bind(MDFTipoInfPagComp.class, new MDFTipoInfPagCompTransformer());
         super.bind(MDFTipoProprietario.class, new MDFTipoProprietarioTransformer());
         super.bind(MDFTipoRodado.class, new MDFTipoRodadoTransformer());
         super.bind(MDFTipoTranportador.class, new MDFTipoTranportadorTransformer());
@@ -190,5 +399,11 @@ public class DFRegistryMatcher extends RegistryMatcher {
         super.bind(MDFTipoUnidadeTransporte.class, new MDFTipoUnidadeTransporteTransformer());
         super.bind(MDFUnidadeMedidaPesoBrutoCarga.class, new MDFUnidadeMedidaPesoBrutoCargaTransformer());
         super.bind(MDFTipoResponsavelSeguro.class, new MDFTipoResponsavelSeguroTransformer());
+        super.bind(MDFTipoIndAltoDesempenho.class, new MDFTipoIndAltoDesempenhoTransformer());
+        super.bind(MDFTipoPermissaoAntecipacao.class, new MDFTipoPermissaoAntecipacaoTransformer());
+        super.bind(MDFTipoValePedagio.class, new MDFTipoValePedagioTransformer());
+
+        // Eventos
+        super.bind(NFEventoTipoAutor.class, new NFEventoTipoAutorTransformer());
     }
 }

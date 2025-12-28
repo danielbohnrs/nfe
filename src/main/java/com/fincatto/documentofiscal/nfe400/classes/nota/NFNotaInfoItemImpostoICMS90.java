@@ -3,16 +3,16 @@ package com.fincatto.documentofiscal.nfe400.classes.nota;
 import com.fincatto.documentofiscal.DFBase;
 import com.fincatto.documentofiscal.nfe400.classes.*;
 import com.fincatto.documentofiscal.validadores.DFBigDecimalValidador;
+import java.math.BigDecimal;
 import org.simpleframework.xml.Element;
 
-import java.math.BigDecimal;
-
 public class NFNotaInfoItemImpostoICMS90 extends DFBase {
+
     private static final long serialVersionUID = 5614463736855881160L;
-    
+
     @Element(name = "orig")
     private NFOrigem origem;
-    
+
     @Element(name = "CST")
     private NFNotaInfoImpostoTributacaoICMS situacaoTributaria;
 
@@ -72,6 +72,15 @@ public class NFNotaInfoItemImpostoICMS90 extends DFBase {
 
     @Element(name = "motDesICMS", required = false)
     private NFNotaMotivoDesoneracaoICMS desoneracao;
+
+    @Element(name = "vICMSSTDeson", required = false)
+    private String valorICMSSTDesonerado;
+
+    @Element(name = "motDesICMSST", required = false)
+    private NFNotaMotivoDesoneracaoICMS motivoDesoneracaoICMSST;
+
+    @Element(name = "indDeduzDeson", required = false)
+    private NFTipoDeducaoIcms indicaDeduzDesoneracao;
 
     public void setOrigem(final NFOrigem origem) {
         this.origem = origem;
@@ -163,6 +172,14 @@ public class NFNotaInfoItemImpostoICMS90 extends DFBase {
         this.valorFundoCombatePobrezaST = DFBigDecimalValidador.tamanho15Com2CasasDecimais(valorFundoCombatePobrezaST, "Valor fundo combate pobreza ST");
     }
 
+    public void setValorICMSSTDesonerado(BigDecimal valorICMSSTDesonerado) {
+        this.valorICMSSTDesonerado = DFBigDecimalValidador.tamanho15Com2CasasDecimais(valorICMSSTDesonerado, "Valor do ICMS-ST desonerado");
+    }
+
+    public void setMotivoDesoneracaoICMSST(NFNotaMotivoDesoneracaoICMS motivoDesoneracaoICMSST) {
+        this.motivoDesoneracaoICMSST = motivoDesoneracaoICMSST;
+    }
+
     public NFOrigem getOrigem() {
         return this.origem;
     }
@@ -245,5 +262,21 @@ public class NFNotaInfoItemImpostoICMS90 extends DFBase {
 
     public String getValorFundoCombatePobrezaST() {
         return this.valorFundoCombatePobrezaST;
+    }
+
+    public String getValorICMSSTDesonerado() {
+        return valorICMSSTDesonerado;
+    }
+
+    public NFNotaMotivoDesoneracaoICMS getMotivoDesoneracaoICMSST() {
+        return motivoDesoneracaoICMSST;
+    }
+
+    public NFTipoDeducaoIcms getIndicaDeduzDesoneracao() {
+        return indicaDeduzDesoneracao;
+    }
+
+    public void setIndicaDeduzDesoneracao(NFTipoDeducaoIcms indicaDeduzDesoneracao) {
+        this.indicaDeduzDesoneracao = indicaDeduzDesoneracao;
     }
 }

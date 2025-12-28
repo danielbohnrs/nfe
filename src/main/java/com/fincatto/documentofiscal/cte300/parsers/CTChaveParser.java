@@ -2,7 +2,8 @@ package com.fincatto.documentofiscal.cte300.parsers;
 
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
-import com.fincatto.documentofiscal.cte300.classes.CTTipoEmissao;
+import com.fincatto.documentofiscal.cte.CTTipoEmissao;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDate;

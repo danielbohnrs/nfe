@@ -16,17 +16,20 @@ import java.util.List;
 
 public class NFNotaInfoItemProduto extends DFBase {
     private static final long serialVersionUID = -2271625077897052364L;
-    
+
     @Element(name = "cProd")
     private String codigo;
 
     @Element(name = "cEAN", required = false)
     @Convert(NFStringNullToEmptyConverter.class)
-    private String codigoDeBarras;
-    
+    private String codigoDeBarrasGtin;
+
+    @Element(name = "cBarra", required = false)
+    private String codigoDeBarrasDiferenteGtin;
+
     @Element(name = "xProd")
     private String descricao;
-    
+
     @Element(name = "NCM")
     private String ncm;
 
@@ -45,34 +48,40 @@ public class NFNotaInfoItemProduto extends DFBase {
     @Element(name = "cBenef", required = false)
     private String codigoBeneficioFiscalUF;
 
+    @Element(name = "gCred", required = false)
+    private NFNotaInfoItemProdutoGrupoCreditoPresumido grupoCreditoPresumido;
+
     @Element(name = "EXTIPI", required = false)
     private String extipi;
-    
+
     @Element(name = "CFOP")
     private String cfop;
-    
+
     @Element(name = "uCom")
     private String unidadeComercial;
-    
+
     @Element(name = "qCom")
     private String quantidadeComercial;
-    
+
     @Element(name = "vUnCom")
     private String valorUnitario;
-    
+
     @Element(name = "vProd")
     private String valorTotalBruto;
 
     @Element(name = "cEANTrib", required = false)
     @Convert(NFStringNullToEmptyConverter.class)
-    private String codigoDeBarrasTributavel;
-    
+    private String codigoDeBarrasGtinTributavel;
+
+    @Element(name = "cBarraTrib", required = false)
+    private String codigoDeBarrasDiferenteGtinTributavel;
+
     @Element(name = "uTrib")
     private String unidadeTributavel;
-    
+
     @Element(name = "qTrib")
     private String quantidadeTributavel;
-    
+
     @Element(name = "vUnTrib")
     private String valorUnitarioTributavel;
 
@@ -87,9 +96,12 @@ public class NFNotaInfoItemProduto extends DFBase {
 
     @Element(name = "vOutro", required = false)
     private String valorOutrasDespesasAcessorias;
-    
+
     @Element(name = "indTot")
     private NFProdutoCompoeValorNota compoeValorNota;
+
+    @Element(name = "indBemMovelUsado", required = false)
+    private String indicadorBemMovelUsado;
 
     @ElementList(entry = "DI", inline = true, required = false)
     private List<NFNotaInfoItemProdutoDeclaracaoImportacao> declaracoesImportacao;
@@ -109,6 +121,12 @@ public class NFNotaInfoItemProduto extends DFBase {
     @ElementList(entry = "rastro", inline = true, required = false)
     private List<NFNotaInfoItemProdutoRastreabilidade> rastros;
 
+    @Element(name = "infProdNFF", required = false)
+    private NFNotaInfoItemProdutoInfoDetalhadaProdutoNFF informacaoDetalhadaProdutoNFF;
+
+    @Element(name = "infProdEmb", required = false)
+    private NFNotaInfoItemProdutoInfoDetalhadaEmbalagemProdutoNFF informacaoDetalhadaEmbalagemProdutoNFF;
+    
     @Element(name = "veicProd", required = false)
     private NFNotaInfoItemProdutoVeiculo veiculo;
 
@@ -124,14 +142,32 @@ public class NFNotaInfoItemProduto extends DFBase {
     @Element(name = "nRECOPI", required = false)
     private String numeroRECOPI;
 
+    /**
+     * I05k - Classificação para subapuração do IBS na ZFM
+     */
+    @Element(name = "tpCredPresIBSZFM", required = false)
+    private String classificacaoSubapuracaoIbsZfm;
+
     public void setCodigo(final String codigo) {
         DFStringValidador.tamanho60(codigo, "Codigo Produto");
         this.codigo = codigo;
     }
 
+    /**
+     * @deprecated  substituido por {@link #setCodigoDeBarrasGtin()}
+     */
+    @Deprecated
     public void setCodigoDeBarras(final String codigoDeBarras) {
-        DFStringValidador.codigoDeBarras(codigoDeBarras);
-        this.codigoDeBarras = codigoDeBarras;
+        this.setCodigoDeBarrasGtin(codigoDeBarras);
+    }
+
+    public void setCodigoDeBarrasGtin(final String codigoDeBarrasGtin) {
+        DFStringValidador.codigoDeBarras(codigoDeBarrasGtin);
+        this.codigoDeBarrasGtin = codigoDeBarrasGtin;
+    }
+
+    public void setCodigoDeBarrasDiferenteGtin(String codigoDeBarrasDiferenteGtin) {
+        this.codigoDeBarrasDiferenteGtin = codigoDeBarrasDiferenteGtin;
     }
 
     public void setDescricao(final String descricao) {
@@ -171,9 +207,21 @@ public class NFNotaInfoItemProduto extends DFBase {
         this.valorTotalBruto = DFBigDecimalValidador.tamanho15Com2CasasDecimais(valorTotalBruto, "Valor Total Bruto Produto");
     }
 
-    public void setCodigoDeBarrasTributavel(final String codigoDeBarrasTributavel) {
-        DFStringValidador.codigoDeBarras(codigoDeBarrasTributavel);
-        this.codigoDeBarrasTributavel = codigoDeBarrasTributavel;
+    /**
+     * @deprecated  substituido por {@link #setCodigoDeBarrasGtinTributavel()}
+     */
+    @Deprecated
+    public void setCodigoDeBarrasTributavel(final String codigoDeBarras) {
+        this.setCodigoDeBarrasGtinTributavel(codigoDeBarras);
+    }
+
+    public void setCodigoDeBarrasGtinTributavel(final String codigoDeBarrasGtinTributavel) {
+        DFStringValidador.codigoDeBarras(codigoDeBarrasGtinTributavel);
+        this.codigoDeBarrasGtinTributavel = codigoDeBarrasGtinTributavel;
+    }
+
+    public void setCodigoDeBarrasDiferenteGtinTributavel(String codigoDeBarrasDiferenteGtinTributavel) {
+        this.codigoDeBarrasDiferenteGtinTributavel = codigoDeBarrasDiferenteGtinTributavel;
     }
 
     public void setUnidadeTributavel(final String unidadeTributavel) {
@@ -208,8 +256,12 @@ public class NFNotaInfoItemProduto extends DFBase {
     public void setCompoeValorNota(final NFProdutoCompoeValorNota compoeValorNota) {
         this.compoeValorNota = compoeValorNota;
     }
+    
+    public void setIndicadorBemMovelUsado(String indicadorBemMovelUsado) {
+		this.indicadorBemMovelUsado = indicadorBemMovelUsado;
+	}
 
-    public void setDeclaracoesImportacao(final List<NFNotaInfoItemProdutoDeclaracaoImportacao> declaracoesImportacao) {
+	public void setDeclaracoesImportacao(final List<NFNotaInfoItemProdutoDeclaracaoImportacao> declaracoesImportacao) {
         this.declaracoesImportacao = declaracoesImportacao;
     }
 
@@ -299,12 +351,29 @@ public class NFNotaInfoItemProduto extends DFBase {
         this.codigoBeneficioFiscalUF = DFStringValidador.validador(codigoBeneficioFiscalUF, "Codigo Beneficio Fiscal da UF", 10, false, false);
     }
 
+    public void setGrupoCreditoPresumido(
+        final NFNotaInfoItemProdutoGrupoCreditoPresumido grupoCreditoPresumido) {
+        this.grupoCreditoPresumido = grupoCreditoPresumido;
+    }
+
     public String getCodigo() {
         return this.codigo;
     }
 
+    public String getCodigoDeBarrasGtin() {
+        return this.codigoDeBarrasGtin == null ? "SEM GTIN" : this.codigoDeBarrasGtin;
+    }
+
+    /**
+     * @deprecated  substituido por {@link #getCodigoDeBarrasGtin()}
+     */
+    @Deprecated
     public String getCodigoDeBarras() {
-        return this.codigoDeBarras == null ? "SEM GTIN" : this.codigoDeBarras;
+        return this.getCodigoDeBarrasGtin();
+    }
+
+    public String getCodigoDeBarrasDiferenteGtin() {
+        return codigoDeBarrasDiferenteGtin;
     }
 
     public String getDescricao() {
@@ -347,8 +416,20 @@ public class NFNotaInfoItemProduto extends DFBase {
         return this.valorTotalBruto;
     }
 
+    /**
+     * @deprecated  substituido por {@link #getCodigoDeBarrasGtinTributavel()}
+     */
+    @Deprecated
     public String getCodigoDeBarrasTributavel() {
-        return this.codigoDeBarrasTributavel == null ? "SEM GTIN" : this.codigoDeBarrasTributavel;
+        return this.getCodigoDeBarrasGtinTributavel();
+    }
+
+    public String getCodigoDeBarrasGtinTributavel() {
+        return this.codigoDeBarrasGtinTributavel == null ? "SEM GTIN" : this.codigoDeBarrasGtinTributavel;
+    }
+
+    public String getCodigoDeBarrasDiferenteGtinTributavel() {
+        return codigoDeBarrasDiferenteGtinTributavel;
     }
 
     public String getUnidadeTributavel() {
@@ -383,7 +464,11 @@ public class NFNotaInfoItemProduto extends DFBase {
         return this.compoeValorNota;
     }
 
-    public List<NFNotaInfoItemProdutoDeclaracaoImportacao> getDeclaracoesImportacao() {
+    public String getIndicadorBemMovelUsado() {
+		return indicadorBemMovelUsado;
+	}
+
+	public List<NFNotaInfoItemProdutoDeclaracaoImportacao> getDeclaracoesImportacao() {
         return this.declaracoesImportacao;
     }
 
@@ -437,5 +522,18 @@ public class NFNotaInfoItemProduto extends DFBase {
 
     public List<NFNotaInfoItemProdutoRastreabilidade> getRastros() {
         return this.rastros;
+    }
+
+    public NFNotaInfoItemProdutoGrupoCreditoPresumido getGrupoCreditoPresumido() {
+        return grupoCreditoPresumido;
+    }
+
+    public String getClassificacaoSubapuracaoIbsZfm() {
+        return classificacaoSubapuracaoIbsZfm;
+    }
+
+    public void setClassificacaoSubapuracaoIbsZfm(String classificacaoSubapuracaoIbsZfm) {
+        DFStringValidador.tamanho1N(classificacaoSubapuracaoIbsZfm, "Classificação Subapuração IBS ZFM");
+        this.classificacaoSubapuracaoIbsZfm = classificacaoSubapuracaoIbsZfm;
     }
 }
