@@ -637,9 +637,13 @@ public enum NFNotaInfoImpostoTributacaoIBSCBSClassTrib {
 	 * @return o enum correspondente ou null se nao encontrado
 	 */
 	public static NFNotaInfoImpostoTributacaoIBSCBSClassTrib valueOfCodigo(final String codigoIBSCBS) {
-	    return Arrays.stream(NFNotaInfoImpostoTributacaoIBSCBSClassTrib.values())
-	    			.filter(ibscbs -> ibscbs.getCodigo().equals(codigoIBSCBS))
-	    				.findFirst().orElse(null);
+	    for (NFNotaInfoImpostoTributacaoIBSCBSClassTrib dfPais : NFNotaInfoImpostoTributacaoIBSCBSClassTrib.values()) {
+	        if (dfPais.getCodigo().equals(codigoIBSCBS)) {
+	            return dfPais;
+	        }
+	    }
+	    return null;
+
 	}
 	
 	static class IND {

@@ -17,7 +17,7 @@ public abstract class DFBigDecimalValidador {
     }
 
     public static String tamanho13Com2CasasDecimais(final BigDecimal valor, final String info) {
-        return DFBigDecimalValidador.parse(valor, "0.00", 13, 2, info);
+        return DFBigDecimalValidador.parse(valor, "0.00", 14, 2, info);
     }
 
     public static String tamanho15Com2CasasDecimais(final BigDecimal valor, final String info) {

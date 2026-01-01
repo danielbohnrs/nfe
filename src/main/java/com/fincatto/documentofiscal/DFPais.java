@@ -1,11 +1,10 @@
 package com.fincatto.documentofiscal;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by Eldevan Nery Junior on 04/05/18.
@@ -313,22 +312,30 @@ public enum DFPais {
     }
 
     public static DFPais valueOfCodigo(Integer codigo){
-        return Arrays.stream(DFPais.values())
-                .filter(dfPais -> dfPais.getCodigo().equals(codigo))
-                .findFirst()
-                .orElse(null);
+    	for (DFPais dfPais : DFPais.values()) {
+    	    if (dfPais.getCodigo().equals(codigo)) {
+    	        return dfPais;
+    	    }
+    	}
+    	return null;
     }
 
     public static DFPais valueOfCodigo(String codigo){
-        return Arrays.stream(DFPais.values())
-                .filter(dfPais -> dfPais.getCodigo().toString().equals(codigo))
-                .findFirst()
-                .orElse(null);
+        for (DFPais dfPais : DFPais.values()) {
+            if (dfPais.getCodigo().toString().equals(codigo)) {
+                return dfPais;
+            }
+        }
+        return null;
     }
 
     public static List<DFPais> getListByDesc(String codigo){
-        return Arrays.stream(DFPais.values())
-                .filter(dfPais -> StringUtils.containsIgnoreCase(dfPais.getDescricao(),codigo))
-                .collect(Collectors.toList());
+    	List<DFPais> lista = new ArrayList<DFPais>();
+    	for (DFPais dfPais : DFPais.values()) {
+    	    if (StringUtils.containsIgnoreCase(dfPais.getDescricao(),codigo)) {
+    	    	lista.add(dfPais);
+    	    }
+    	}
+    	return lista;
     }
 }

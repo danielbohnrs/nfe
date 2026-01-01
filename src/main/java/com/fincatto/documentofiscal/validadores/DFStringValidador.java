@@ -907,16 +907,43 @@ public abstract class DFStringValidador {
                 final Class<?> returnType = method.getReturnType();
                 Method[] typeMethods = returnType.getMethods();
                 //verifica se a classe de ICMS tem o item NFNotaInfoItemModalidadeBCICMSST.
-                final boolean present = Arrays.stream(typeMethods).anyMatch(method1 -> method1.getReturnType().equals(NFNotaInfoItemModalidadeBCICMSST.class));
+                boolean present = false;
+
+                for (Method method2 : typeMethods) {
+                    if (method2.getReturnType().equals(NFNotaInfoItemModalidadeBCICMSST.class)) {
+                        present = true;
+                        break;
+                    }
+                }
                 if (present) {
                     //invoca o metodo para verificar qual classe de ICMS esta preenchida(objectValue!=null)
                     Object objectValue = method.invoke(impostoICMS);
                     if (objectValue != null) {
                         // retorna o metodo necessario para extrair o valor de ModalidadeMVA.
-                        Method modalidadeMethod = Arrays.stream(typeMethods).filter(method1 -> method1.getReturnType().equals(NFNotaInfoItemModalidadeBCICMSST.class)).findAny().get();
+                    	Method modalidadeMethod = null;
+
+                    	for (Method methodInterno : typeMethods) {
+                    	    if (methodInterno.getReturnType().equals(NFNotaInfoItemModalidadeBCICMSST.class)) {
+                    	        modalidadeMethod = methodInterno;
+                    	        break; // findAny(): any one match is enough
+                    	    }
+                    	}
+
+                    	if (modalidadeMethod == null) {
+                    	    throw new java.util.NoSuchElementException();
+                    	}
+
                         NFNotaInfoItemModalidadeBCICMSST modalidadeBCICMSST = (NFNotaInfoItemModalidadeBCICMSST) modalidadeMethod.invoke(objectValue, new Object[]{});
                         // retorna o metodo necessario para extrair o valor da percentualMargemValorAdicionadoICMSST(pMVAST).
-                        Method percentualMethod = Arrays.stream(typeMethods).filter(method1 -> method1.getName().contains("getPercentualMargemValorAdicionadoICMSST")).findAny().orElse(null);
+                        Method percentualMethod = null;
+
+                        for (Method methodP : typeMethods) {
+                            if (methodP.getName().contains("getPercentualMargemValorAdicionadoICMSST")) {
+                                percentualMethod = methodP;
+                                break; // findAny(): first match is sufficient
+                            }
+                        }
+
                         String percentualValue = null;
                         if (percentualMethod != null) {
                             percentualValue = (String) percentualMethod.invoke(objectValue, new Object[]{});

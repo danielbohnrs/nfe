@@ -1,17 +1,38 @@
 package com.fincatto.documentofiscal.utils;
 
-import com.fincatto.documentofiscal.DFConfig;
-import com.fincatto.documentofiscal.DFLog;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.jcp.xml.dsig.internal.dom.XMLDSigRI;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
+import java.io.InputStream;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.Signature;
+import java.security.UnrecoverableEntryException;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
 
 import javax.naming.ldap.LdapName;
-import javax.xml.crypto.*;
-import javax.xml.crypto.dsig.*;
+import javax.naming.ldap.Rdn;
+import javax.xml.crypto.AlgorithmMethod;
+import javax.xml.crypto.KeySelector;
+import javax.xml.crypto.KeySelectorException;
+import javax.xml.crypto.KeySelectorResult;
+import javax.xml.crypto.XMLCryptoContext;
+import javax.xml.crypto.XMLStructure;
+import javax.xml.crypto.dsig.CanonicalizationMethod;
+import javax.xml.crypto.dsig.DigestMethod;
+import javax.xml.crypto.dsig.Reference;
+import javax.xml.crypto.dsig.SignatureMethod;
+import javax.xml.crypto.dsig.SignedInfo;
+import javax.xml.crypto.dsig.Transform;
+import javax.xml.crypto.dsig.XMLSignature;
+import javax.xml.crypto.dsig.XMLSignatureFactory;
 import javax.xml.crypto.dsig.dom.DOMSignContext;
 import javax.xml.crypto.dsig.dom.DOMValidateContext;
 import javax.xml.crypto.dsig.keyinfo.KeyInfo;
@@ -25,10 +46,16 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.*;
-import java.security.*;
-import java.security.cert.X509Certificate;
-import java.util.*;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.jcp.xml.dsig.internal.dom.XMLDSigRI;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
+import com.fincatto.documentofiscal.DFConfig;
+import com.fincatto.documentofiscal.DFLog;
 
 public class DFAssinaturaDigital implements DFLog {
 
@@ -84,11 +111,21 @@ public class DFAssinaturaDigital implements DFLog {
         final String dn = ((X509Certificate) keyEntry.getCertificate()).getSubjectX500Principal().getName();
         this.getLogger().debug("DN: {}", dn);
 
-        final String cn = new LdapName(dn).getRdns().stream()
-                .filter(rdn -> StringUtils.equalsIgnoreCase(rdn.getType(), "CN"))
-                .map(val -> String.valueOf(val.getValue()))
-                .findFirst()
-                .orElse("");
+        String cn = "";
+
+        try {
+            List<Rdn> rdns = new LdapName(dn).getRdns();
+            for (Rdn rdn : rdns) {
+                if (StringUtils.equalsIgnoreCase(rdn.getType(), "CN")) {
+                    Object value = rdn.getValue();
+                    cn = value != null ? String.valueOf(value) : "";
+                    break;
+                }
+            }
+        } catch (javax.naming.InvalidNameException e) {
+            // keep cn as empty string (same semantic as orElse(""))
+        }
+        
         this.getLogger().debug("CN: {}", cn);
 
 
