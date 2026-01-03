@@ -7,6 +7,10 @@
 package com.fincatto.documentofiscal.cte400.webservices.gerado;
 
 
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+
 import com.fincatto.documentofiscal.DFConfig;
 import com.fincatto.documentofiscal.utils.MessageContextFactory;
 
@@ -707,6 +711,12 @@ public class CTeRecepcaoOSV4Stub extends org.apache.axis2.client.Stub {
                 return object;
             }
         } //end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     public static class CteDadosMsg implements org.apache.axis2.databinding.ADBBean {
@@ -1064,6 +1074,12 @@ public class CTeRecepcaoOSV4Stub extends org.apache.axis2.client.Stub {
                 return object;
             }
         } //end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     public static class ExtensionMapper {

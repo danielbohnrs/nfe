@@ -6,6 +6,8 @@
 package com.fincatto.documentofiscal.mdfe3.webservices.statusservico;
 
 import javax.xml.namespace.QName;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 import org.apache.axiom.om.OMAttribute;
 import org.apache.axis2.client.Stub;
@@ -535,6 +537,12 @@ public class MDFeStatusServicoStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     public static class ExtensionMapper {
@@ -836,6 +844,12 @@ public class MDFeStatusServicoStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     @SuppressWarnings("serial")
@@ -1126,6 +1140,12 @@ public class MDFeStatusServicoStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     @SuppressWarnings("serial")
@@ -1555,6 +1575,12 @@ public class MDFeStatusServicoStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
     //    @SuppressWarnings("unused")
     //    private org.apache.axiom.om.OMElement toOM(final com.fincatto.documentofiscal.mdfe3.webservices.statusservico.MDFeStatusServicoStub.MdfeDadosMsg param, final boolean optimizeContent) throws org.apache.axis2.AxisFault {

@@ -1,6 +1,8 @@
 package com.fincatto.documentofiscal.nfe310.webservices.statusservico.consulta;
 
 import javax.xml.namespace.QName;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 import org.apache.axiom.om.OMAttribute;
 
@@ -639,6 +641,12 @@ public class NfeStatusServicoStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         } //end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     public static class ExtensionMapper {
@@ -892,6 +900,12 @@ public class NfeStatusServicoStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         } //end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     public static class NfeDadosMsg implements org.apache.axis2.databinding.ADBBean {
@@ -1173,6 +1187,12 @@ public class NfeStatusServicoStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         } //end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     public static class NfeStatusServicoNFResult implements org.apache.axis2.databinding.ADBBean {
@@ -1454,5 +1474,11 @@ public class NfeStatusServicoStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         } //end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 }

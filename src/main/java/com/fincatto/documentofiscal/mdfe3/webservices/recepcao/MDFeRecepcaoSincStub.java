@@ -13,6 +13,7 @@ import com.fincatto.documentofiscal.utils.MessageContextFactory;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 /*
  * MDFeRecepcaoStub java implementation
@@ -715,6 +716,12 @@ public class MDFeRecepcaoSincStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     @SuppressWarnings("serial")
@@ -1004,6 +1011,12 @@ public class MDFeRecepcaoSincStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     @SuppressWarnings("serial")
@@ -1254,6 +1267,12 @@ public class MDFeRecepcaoSincStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     @SuppressWarnings("serial")
@@ -1545,6 +1564,12 @@ public class MDFeRecepcaoSincStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
     // private org.apache.axiom.om.OMElement toOM(com.fincatto.documentofiscal.mdfe3.webservices.recepcao.MDFeRecepcaoStub.MdfeDadosMsg param, boolean optimizeContent) throws org.apache.axis2.AxisFault {
     // try {

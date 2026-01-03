@@ -1,6 +1,8 @@
 package com.fincatto.documentofiscal.cte.webservices.distribuicao;
 
 import javax.xml.namespace.QName;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 import org.apache.axis2.client.Stub;
 
@@ -470,6 +472,20 @@ public class CTeDistribuicaoDFeSoapStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public javax.xml.stream.XMLStreamReader getPullParser(final javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
+            final java.util.ArrayList elementList = new java.util.ArrayList();
+            final java.util.ArrayList attribList = new java.util.ArrayList();
+            if (this.localCteDadosMsgTracker) {
+                elementList.add(new javax.xml.namespace.QName("http://www.portalfiscal.inf.br/cte/wsdl/CTeDistribuicaoDFe", "cteDadosMsg"));
+                if (this.localCteDadosMsg == null) {
+                    throw new org.apache.axis2.databinding.ADBException("cteDadosMsg cannot be null!!");
+                }
+                elementList.add(this.localCteDadosMsg);
+            }
+            return new org.apache.axis2.databinding.utils.reader.ADBXMLStreamReaderImpl(qName, elementList.toArray(), attribList.toArray());
+        }
     }
 
     public static class CteDadosMsg_type0 implements org.apache.axis2.databinding.ADBBean {
@@ -777,6 +793,19 @@ public class CTeDistribuicaoDFeSoapStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public javax.xml.stream.XMLStreamReader getPullParser(final javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
+            final java.util.ArrayList elementList = new java.util.ArrayList();
+            final java.util.ArrayList attribList = new java.util.ArrayList();
+            if (this.localExtraElement != null) {
+                elementList.add(org.apache.axis2.databinding.utils.Constants.OM_ELEMENT_KEY);
+                elementList.add(this.localExtraElement);
+            } else {
+                throw new org.apache.axis2.databinding.ADBException("extraElement cannot be null!!");
+            }
+            return new org.apache.axis2.databinding.utils.reader.ADBXMLStreamReaderImpl(qName, elementList.toArray(), attribList.toArray());
+        }
     }
 
     public static class CteDistDFeInteresseResponse implements org.apache.axis2.databinding.ADBBean {
@@ -1082,6 +1111,20 @@ public class CTeDistribuicaoDFeSoapStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public javax.xml.stream.XMLStreamReader getPullParser(final javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
+            final java.util.ArrayList elementList = new java.util.ArrayList();
+            final java.util.ArrayList attribList = new java.util.ArrayList();
+            if (this.localCteDistDFeInteresseResultTracker) {
+                elementList.add(new javax.xml.namespace.QName("http://www.portalfiscal.inf.br/cte/wsdl/CTeDistribuicaoDFe", "cteDistDFeInteresseResult"));
+                if (this.localCteDistDFeInteresseResult == null) {
+                    throw new org.apache.axis2.databinding.ADBException("cteDistDFeInteresseResult cannot be null!!");
+                }
+                elementList.add(this.localCteDistDFeInteresseResult);
+            }
+            return new org.apache.axis2.databinding.utils.reader.ADBXMLStreamReaderImpl(qName, elementList.toArray(), attribList.toArray());
+        }
     }
 
     public static class ExtensionMapper {
@@ -1402,6 +1445,19 @@ public class CTeDistribuicaoDFeSoapStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public javax.xml.stream.XMLStreamReader getPullParser(final javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
+            final java.util.ArrayList elementList = new java.util.ArrayList();
+            final java.util.ArrayList attribList = new java.util.ArrayList();
+            if (this.localExtraElement != null) {
+                elementList.add(org.apache.axis2.databinding.utils.Constants.OM_ELEMENT_KEY);
+                elementList.add(this.localExtraElement);
+            } else {
+                throw new org.apache.axis2.databinding.ADBException("extraElement cannot be null!!");
+            }
+            return new org.apache.axis2.databinding.utils.reader.ADBXMLStreamReaderImpl(qName, elementList.toArray(), attribList.toArray());
+        }
     }
 
     private org.apache.axiom.om.OMElement toOM(final com.fincatto.documentofiscal.cte.webservices.distribuicao.CTeDistribuicaoDFeSoapStub.CteDistDFeInteresse param, final boolean optimizeContent) {

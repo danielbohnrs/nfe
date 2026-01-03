@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.wmixvideo</groupId>
     <artifactId>nfe</artifactId>
-    <version>5.0.41-SNAPSHOT</version>
+    <version>5.0.42-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>nfe</name>
     <description>Biblioteca de comunicacao de nota fiscal eletronica brasileira</description>
@@ -35,20 +35,20 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <axis2.version>1.7.9</axis2.version>
-        <slf4j.version>1.7.21</slf4j.version>
-        <junit.version>4.13.2</junit.version>
-        <commons-lang3.version>3.20.0</commons-lang3.version>
+        <axis2.version>1.6.4</axis2.version>
+        <slf4j.version>1.7.30</slf4j.version>
+        <junit.version>4.13.1</junit.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
         <simple-xml.version>2.7.1</simple-xml.version>
     </properties>
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.apache.santuario/xmlsec -->
-        <dependency>
-            <groupId>org.apache.santuario</groupId>
-            <artifactId>xmlsec</artifactId>
-            <version>3.0.3</version>
-        </dependency>
+<!--         <dependency> -->
+<!--             <groupId>org.apache.santuario</groupId> -->
+<!--             <artifactId>xmlsec</artifactId> -->
+<!--             <version>3.0.3</version> -->
+<!--         </dependency> -->
 
         <!-- Simple Xml Framework -->
         <dependency>

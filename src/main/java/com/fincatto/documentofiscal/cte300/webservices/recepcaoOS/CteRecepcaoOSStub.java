@@ -1,6 +1,8 @@
 package com.fincatto.documentofiscal.cte300.webservices.recepcaoOS;
 
 import javax.xml.namespace.QName;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 import org.apache.axiom.om.OMAttribute;
 import org.apache.axis2.client.Stub;
@@ -520,6 +522,12 @@ public class CteRecepcaoOSStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     public static class CteCabecMsg implements org.apache.axis2.databinding.ADBBean {
@@ -944,6 +952,12 @@ public class CteRecepcaoOSStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     public static class ExtensionMapper {
@@ -1240,6 +1254,12 @@ public class CteRecepcaoOSStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     public static class CteRecepcaoOSResult implements org.apache.axis2.databinding.ADBBean {
@@ -1526,6 +1546,12 @@ public class CteRecepcaoOSStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     private org.apache.axiom.om.OMElement toOM(final com.fincatto.documentofiscal.cte300.webservices.recepcaoOS.CteRecepcaoOSStub.CteDadosMsg param, final boolean optimizeContent) {

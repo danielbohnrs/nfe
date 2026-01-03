@@ -4,6 +4,8 @@
 package com.fincatto.documentofiscal.mdfe3.webservices.recepcaoevento;
 
 import javax.xml.namespace.QName;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 import org.apache.axiom.om.OMAttribute;
 import org.apache.axis2.client.Stub;
@@ -541,6 +543,12 @@ public class MDFeRecepcaoEventoStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     @SuppressWarnings("serial")
@@ -829,6 +837,12 @@ public class MDFeRecepcaoEventoStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     @SuppressWarnings("serial")
@@ -1117,6 +1131,12 @@ public class MDFeRecepcaoEventoStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     @SuppressWarnings("serial")
@@ -1539,6 +1559,12 @@ public class MDFeRecepcaoEventoStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     @SuppressWarnings("unused")

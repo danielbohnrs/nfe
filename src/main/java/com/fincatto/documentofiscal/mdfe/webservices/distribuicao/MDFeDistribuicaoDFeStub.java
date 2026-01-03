@@ -6,6 +6,10 @@
  */
 package com.fincatto.documentofiscal.mdfe.webservices.distribuicao;
 
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+
 /*
  *  MDFeDistribuicaoDFeStub java implementation
  */
@@ -699,6 +703,12 @@ public class MDFeDistribuicaoDFeStub extends org.apache.axis2.client.Stub {
 				return object;
 			}
 		} // end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 
 	public static class MdfeCabecMsgE implements org.apache.axis2.databinding.ADBBean {
@@ -1003,6 +1013,12 @@ public class MDFeDistribuicaoDFeStub extends org.apache.axis2.client.Stub {
 				return object;
 			}
 		} // end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 
 	public static class MdfeDadosMsg implements org.apache.axis2.databinding.ADBBean {
@@ -1368,6 +1384,12 @@ public class MDFeDistribuicaoDFeStub extends org.apache.axis2.client.Stub {
 				return object;
 			}
 		} // end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 
 	public static class MdfeCabecMsg implements org.apache.axis2.databinding.ADBBean {
@@ -1912,5 +1934,11 @@ public class MDFeDistribuicaoDFeStub extends org.apache.axis2.client.Stub {
 				return object;
 			}
 		} // end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 }

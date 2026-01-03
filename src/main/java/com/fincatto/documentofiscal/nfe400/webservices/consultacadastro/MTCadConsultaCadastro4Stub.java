@@ -1,5 +1,9 @@
 package com.fincatto.documentofiscal.nfe400.webservices.consultacadastro;
 
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+
 public class MTCadConsultaCadastro4Stub extends org.apache.axis2.client.Stub {
     private static int counter = 0;
     protected org.apache.axis2.description.AxisOperation[] _operations;
@@ -823,6 +827,12 @@ public class MTCadConsultaCadastro4Stub extends org.apache.axis2.client.Stub {
                 return object;
             }
         } //end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     public static class ConsultaCadastroResult_type0 implements org.apache.axis2.databinding.ADBBean {
@@ -1219,6 +1229,12 @@ public class MTCadConsultaCadastro4Stub extends org.apache.axis2.client.Stub {
                 return object;
             }
         } //end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     public static class NfeDadosMsg_type0 implements org.apache.axis2.databinding.ADBBean {
@@ -1620,6 +1636,12 @@ public class MTCadConsultaCadastro4Stub extends org.apache.axis2.client.Stub {
                 return object;
             }
         } //end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     public static class ConsultaCadastro implements org.apache.axis2.databinding.ADBBean {
@@ -2008,5 +2030,11 @@ public class MTCadConsultaCadastro4Stub extends org.apache.axis2.client.Stub {
                 return object;
             }
         } //end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 }

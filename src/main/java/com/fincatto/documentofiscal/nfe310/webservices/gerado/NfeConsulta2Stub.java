@@ -3,6 +3,8 @@ package com.fincatto.documentofiscal.nfe310.webservices.gerado;
 import java.lang.reflect.Constructor;
 
 import javax.xml.namespace.QName;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 import org.apache.axiom.om.OMAttribute;
 import org.apache.axis2.client.Stub;
@@ -430,6 +432,12 @@ public class NfeConsulta2Stub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     public static class NfeConsultaNF2Result implements org.apache.axis2.databinding.ADBBean {
@@ -586,6 +594,12 @@ public class NfeConsulta2Stub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     public static class NfeCabecMsgE implements org.apache.axis2.databinding.ADBBean {
@@ -652,6 +666,12 @@ public class NfeConsulta2Stub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     public static class ExtensionMapper {
@@ -818,6 +838,12 @@ public class NfeConsulta2Stub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public XMLStreamReader getPullParser(QName arg0) throws XMLStreamException {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 
     private org.apache.axiom.om.OMElement toOM(final NfeConsulta2Stub.NfeCabecMsgE param, final boolean optimizeContent) {

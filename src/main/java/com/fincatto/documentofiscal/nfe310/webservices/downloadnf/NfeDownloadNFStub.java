@@ -5,6 +5,8 @@
 package com.fincatto.documentofiscal.nfe310.webservices.downloadnf;
 
 import javax.xml.namespace.QName;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 import org.apache.axiom.om.OMAttribute;
 import org.apache.axis2.client.Stub;
@@ -564,6 +566,19 @@ public class NfeDownloadNFStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public javax.xml.stream.XMLStreamReader getPullParser(final javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
+            final java.util.ArrayList elementList = new java.util.ArrayList();
+            final java.util.ArrayList attribList = new java.util.ArrayList();
+            if (this.localExtraElement != null) {
+                elementList.add(org.apache.axis2.databinding.utils.Constants.OM_ELEMENT_KEY);
+                elementList.add(this.localExtraElement);
+            } else {
+                throw new org.apache.axis2.databinding.ADBException("extraElement cannot be null!!");
+            }
+            return new org.apache.axis2.databinding.utils.reader.ADBXMLStreamReaderImpl(qName, elementList.toArray(), attribList.toArray());
+        }
     }
 
     public static class NfeCabecMsgE implements org.apache.axis2.databinding.ADBBean {
@@ -809,6 +824,12 @@ public class NfeDownloadNFStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public javax.xml.stream.XMLStreamReader getPullParser(final javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
+            // We can safely assume an element has only one type associated with it
+            return this.localNfeCabecMsg.getPullParser(NfeCabecMsgE.MY_QNAME);
+        }
     }
 
     public static class ExtensionMapper {
@@ -1243,6 +1264,33 @@ public class NfeDownloadNFStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public javax.xml.stream.XMLStreamReader getPullParser(final javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
+            final java.util.ArrayList elementList = new java.util.ArrayList();
+            final java.util.ArrayList attribList = new java.util.ArrayList();
+            if (this.localVersaoDadosTracker) {
+                elementList.add(new javax.xml.namespace.QName("http://www.portalfiscal.inf.br/nfe/wsdl/NfeDownloadNF", "versaoDados"));
+                if (this.localVersaoDados != null) {
+                    elementList.add(org.apache.axis2.databinding.utils.ConverterUtil.convertToString(this.localVersaoDados));
+                } else {
+                    throw new org.apache.axis2.databinding.ADBException("versaoDados cannot be null!!");
+                }
+            }
+            if (this.localCUFTracker) {
+                elementList.add(new javax.xml.namespace.QName("http://www.portalfiscal.inf.br/nfe/wsdl/NfeDownloadNF", "cUF"));
+                if (this.localCUF != null) {
+                    elementList.add(org.apache.axis2.databinding.utils.ConverterUtil.convertToString(this.localCUF));
+                } else {
+                    throw new org.apache.axis2.databinding.ADBException("cUF cannot be null!!");
+                }
+            }
+            for (final OMAttribute localExtraAttribute : this.localExtraAttributes) {
+                attribList.add(org.apache.axis2.databinding.utils.Constants.OM_ATTRIBUTE_KEY);
+                attribList.add(localExtraAttribute);
+            }
+            return new org.apache.axis2.databinding.utils.reader.ADBXMLStreamReaderImpl(qName, elementList.toArray(), attribList.toArray());
+        }
     }
 
     public static class NfeDownloadNFResult implements org.apache.axis2.databinding.ADBBean {
@@ -1529,6 +1577,19 @@ public class NfeDownloadNFStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         }// end of factory class
+
+		@Override
+		public javax.xml.stream.XMLStreamReader getPullParser(final javax.xml.namespace.QName qName) throws org.apache.axis2.databinding.ADBException {
+            final java.util.ArrayList elementList = new java.util.ArrayList();
+            final java.util.ArrayList attribList = new java.util.ArrayList();
+            if (this.localExtraElement != null) {
+                elementList.add(org.apache.axis2.databinding.utils.Constants.OM_ELEMENT_KEY);
+                elementList.add(this.localExtraElement);
+            } else {
+                throw new org.apache.axis2.databinding.ADBException("extraElement cannot be null!!");
+            }
+            return new org.apache.axis2.databinding.utils.reader.ADBXMLStreamReaderImpl(qName, elementList.toArray(), attribList.toArray());
+        }
     }
 
     private org.apache.axiom.om.OMElement toOM(final com.fincatto.documentofiscal.nfe310.webservices.downloadnf.NfeDownloadNFStub.NfeDadosMsg param, final boolean optimizeContent) {
