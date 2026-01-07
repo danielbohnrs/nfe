@@ -15,10 +15,10 @@ public class NFNotaInfoItemImpostoIS extends DFBase {
 
   private static final long serialVersionUID = -366528394939416671L;
 
-  @Element(name = "CSTIS", required = true)
+  @Element(name = "CSTIS", required = false)
   private NFNotaInfoImpostoTributacaoIS cstIS; // UB02
 
-  @Element(name = "cClassTribIS", required = true)
+  @Element(name = "cClassTribIS", required = false)
   private String cClassTribIS; // UB03
 
   // UB04 -x- Sequência XML 0-1

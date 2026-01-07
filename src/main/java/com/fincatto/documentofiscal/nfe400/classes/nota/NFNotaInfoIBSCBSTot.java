@@ -86,10 +86,10 @@ public class NFNotaInfoIBSCBSTot extends DFBase {
     @Element(name = "vIBS", required = true)
     private String vIBS; // W47
 
-    @Element(name = "vCredPres", required = true)
+    @Element(name = "vCredPres", required = false)
     private String vCredPres; // W48
 
-    @Element(name = "vCredPresCondSus", required = true)
+    @Element(name = "vCredPresCondSus", required = false)
     private String vCredPresCondSus; // W49
 
     public GIBSUF getGIBSUF() {
