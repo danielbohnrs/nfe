@@ -11,54 +11,57 @@ public abstract class DFUtils {
 
     /**
      * Verifica se o CNPJ informado eh valido. <br>
-     * Nao verifica o tamanho e presume que este seja de 14 digidos e somente numeros.
+     * Nao verifica o tamanho e presume que este seja de 14 digidos. Já suporta cnpj alpha
      *
      * @param cnpj CNPJ a ser validado.
      * @return Se o CNPJ informado eh valido ou nao.
      */
     public static boolean isCnpjValido(final String cnpj) {
-        if (cnpj == null || !cnpj.matches("^[0-9]{14}$")) {
+
+        if (cnpj == null) {
             return false;
         }
 
-        // verifica por falsos positivos
-        if (cnpj.equalsIgnoreCase("00000000000000")) {
+        final String value = cnpj.toUpperCase();
+
+        // 12 alphanumeric + 2 numeric
+        if (!value.matches("^[A-Z0-9]{12}[0-9]{2}$")) {
             return false;
         }
 
-        String cnpjCalculado = cnpj.substring(0, 12);
-        final char[] chrCNPJ = cnpj.toCharArray();
+        // false positives
+        if (value.equals("00000000000000")) {
+            return false;
+        }
 
-        // primeira parte
+        final String base = value.substring(0, 12);
+
+        final int dv1 = calcularDigito(base,
+                new int[]{5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2});
+
+        final int dv2 = calcularDigito(base + dv1,
+                new int[]{6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2});
+
+        return value.equals(base + dv1 + dv2);
+    }
+
+    private static int calcularDigito(final String value, final int[] pesos) {
+
         int soma = 0;
-        for (int i = 0; i < 4; i++) {
-            if (((chrCNPJ[i] - 48) >= 0) && ((chrCNPJ[i] - 48) <= 9)) {
-                soma += (chrCNPJ[i] - 48) * (6 - (i + 1));
-            }
-        }
-        for (int i = 0; i < 8; i++) {
-            if (((chrCNPJ[i + 4] - 48) >= 0) && ((chrCNPJ[i + 4] - 48) <= 9)) {
-                soma += (chrCNPJ[i + 4] - 48) * (10 - (i + 1));
-            }
-        }
-        int dig = 11 - (soma % 11);
-        cnpjCalculado += (dig == 10) || (dig == 11) ? "0" : Integer.toString(dig);
 
-        // segunda parte
-        soma = 0;
-        for (int i = 0; i < 5; i++) {
-            if (((chrCNPJ[i] - 48) >= 0) && ((chrCNPJ[i] - 48) <= 9)) {
-                soma += (chrCNPJ[i] - 48) * (7 - (i + 1));
-            }
+        for (int i = 0; i < value.length(); i++) {
+
+            final char c = value.charAt(i);
+
+            // ASCII - 48
+            final int valor = ((int) c) - 48;
+
+            soma += valor * pesos[i];
         }
-        for (int i = 0; i < 8; i++) {
-            if (((chrCNPJ[i + 5] - 48) >= 0) && ((chrCNPJ[i + 5] - 48) <= 9)) {
-                soma += (chrCNPJ[i + 5] - 48) * (10 - (i + 1));
-            }
-        }
-        dig = 11 - (soma % 11);
-        cnpjCalculado += (dig == 10) || (dig == 11) ? "0" : Integer.toString(dig);
-        return cnpj.equals(cnpjCalculado);
+
+        final int resto = soma % 11;
+
+        return (resto < 2) ? 0 : 11 - resto;
     }
 
     /**

@@ -77,13 +77,13 @@ public class NFNotaInfoIBSCBSTot extends DFBase {
 
     private static final long serialVersionUID = 6387739393518311458L;
 
-    @Element(name = "gIBSUF", required = true)
+    @Element(name = "gIBSUF", required = false)
     private GIBS.GIBSUF gIBSUF; // W37
 
-    @Element(name = "gIBSMun", required = true)
+    @Element(name = "gIBSMun", required = false)
     private GIBS.GIBSMun gIBSMun; // W42
 
-    @Element(name = "vIBS", required = true)
+    @Element(name = "vIBS", required = false)
     private String vIBS; // W47
 
     @Element(name = "vCredPres", required = false)
@@ -137,13 +137,13 @@ public class NFNotaInfoIBSCBSTot extends DFBase {
 
 	  private static final long serialVersionUID = 2194095471152971393L;
 
-      @Element(name = "vDif", required = true)
+      @Element(name = "vDif", required = false)
       private String vDif; // W38
 
-      @Element(name = "vDevTrib", required = true)
+      @Element(name = "vDevTrib", required = false)
       private String vDevTrib; // W39
 
-      @Element(name = "vIBSUF", required = true)
+      @Element(name = "vIBSUF", required = false)
       private String vIBSUF; // W41
 
       public String getVDif() {
@@ -177,13 +177,13 @@ public class NFNotaInfoIBSCBSTot extends DFBase {
 
 	  private static final long serialVersionUID = -2332368864513646731L;
 
-      @Element(required = true)
+      @Element(required = false)
       private String vDif; // W43
 
-      @Element(required = true)
+      @Element(required = false)
       private String vDevTrib; // W44
 
-      @Element(required = true)
+      @Element(required = false)
       private String vIBSMun; // W46
 
       public String getVDif() {

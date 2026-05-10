@@ -33,6 +33,19 @@ public enum NFOperadoraCartao {
         }
         return null;
     }
+    
+    public static NFOperadoraCartao valueOfDescricao(final String descricao) {
+        if (descricao == null) {
+            return null;
+        }
+
+        for (final NFOperadoraCartao operadora : NFOperadoraCartao.values()) {
+            if (operadora.getDescricao().equalsIgnoreCase(descricao)) {
+                return operadora;
+            }
+        }
+        return null;
+    }
 
     @Override
     public String toString() {

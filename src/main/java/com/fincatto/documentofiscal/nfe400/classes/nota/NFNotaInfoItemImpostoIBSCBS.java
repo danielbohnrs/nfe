@@ -1,14 +1,14 @@
 package com.fincatto.documentofiscal.nfe400.classes.nota;
 
+import java.math.BigDecimal;
+import java.time.YearMonth;
+
+import org.simpleframework.xml.Element;
+
 import com.fincatto.documentofiscal.DFBase;
 import com.fincatto.documentofiscal.nfe400.classes.NFNotaInfoImpostoTributacaoIBSCBS;
 import com.fincatto.documentofiscal.validadores.DFBigDecimalValidador;
 import com.fincatto.documentofiscal.validadores.DFStringValidador;
-import org.simpleframework.xml.Element;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.YearMonth;
 
 /**
  * UB12
@@ -19,10 +19,10 @@ public class NFNotaInfoItemImpostoIBSCBS extends DFBase {
 
     private static final long serialVersionUID = -366528394939416671L;
 
-	@Element(name = "CST", required = true)
+	@Element(name = "CST", required = false)
 	private NFNotaInfoImpostoTributacaoIBSCBS cst; // UB13
 
-	@Element(required = true)
+	@Element(required = false)
 	private String cClassTrib; // UB14
 
     /**
